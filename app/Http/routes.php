@@ -12,11 +12,11 @@
 */
 
 Route::get('/', ['uses'=>'HomeController@getIndex']);
-Route::get('danh-muc/{cateslug}.{cateid}',['uses'=>'HomeController@getListSoftwareSWithCate']);
-Route::get('he-dieu-hanh/{systemslug}.{systemid}',['uses'=>'HomeController@getListSoftwaresWithSystem']);
-Route::get('{softwareslug}.{softwareid}.html',['uses'=>'HomeController@getDetailSoftware']);
-Route::get('download/{softwareslug}.{softwareid}.html',['uses'=>'HomeController@getDownloadSoftware']);
-Route::get('tim-kiem.html',['uses'=>'HomeController@getSearchSoftware']);
+Route::get('danh-muc/{cateslug}.{cateid}',['uses'=>'HomeController@getListPostSWithCate']);
+Route::get('he-dieu-hanh/{systemslug}.{systemid}',['uses'=>'HomeController@getListPostsWithSystem']);
+Route::get('{softwareslug}.{softwareid}.html',['uses'=>'HomeController@getDetailPost']);
+Route::get('download/{softwareslug}.{softwareid}.html',['uses'=>'HomeController@getDownloadPost']);
+Route::get('tim-kiem.html',['uses'=>'HomeController@getSearchPost']);
 Route::group(['prefix' => 'api'], function(){
 	Route::group(['prefix' => 'system'], function(){
 		Route::get('list-systems',['uses'=>'SystemController@getListSystemSimpleAjax']);
@@ -25,15 +25,15 @@ Route::group(['prefix' => 'api'], function(){
 		Route::get('list-cates',['uses'=>'CategoryController@getListCateAjax']);
 	});
 	Route::group(['prefix' => 'software'], function(){
-		Route::get('most-download/{number?}',['uses'=>'SoftwareController@getMostDownloadSoftwareAjax']);
-		Route::get('highest-view-in-system/{sysid?}',['uses'=>'SoftwareController@getHighestViewSoftwareInsystemAjax']);
-		Route::get('list-newest/{offset?}/{max?}',['uses'=>'SoftwareController@getListNewestSoftwareAjax']);
-		Route::get('list-last-update/{offset?}/{max?}',['uses'=>'SoftwareController@getListLastUpdateAjax']);
-		Route::get('list-random/{max?}',['uses'=>'SoftwareController@getListRandomAjax']);
-		Route::get('list-with-cate/{max}/{page}',['uses'=>'SoftwareController@getListSoftwareWithCateAjax']);
-		//Route::get('total-with-cate/{cateid}',['uses'=>'SoftwareController@getTotalSoftwareWithCateAjax']);
+		Route::get('most-download/{number?}',['uses'=>'PostController@getMostDownloadPostAjax']);
+		Route::get('highest-view-in-system/{sysid?}',['uses'=>'PostController@getHighestViewPostInsystemAjax']);
+		Route::get('list-newest/{offset?}/{max?}',['uses'=>'PostController@getListNewestPostAjax']);
+		Route::get('list-last-update/{offset?}/{max?}',['uses'=>'PostController@getListLastUpdateAjax']);
+		Route::get('list-random/{max?}',['uses'=>'PostController@getListRandomAjax']);
+		Route::get('list-with-cate/{max}/{page}',['uses'=>'PostController@getListPostWithCateAjax']);
+		//Route::get('total-with-cate/{cateid}',['uses'=>'PostController@getTotalPostWithCateAjax']);
 	});
-	
+
 
 });
 
@@ -48,7 +48,7 @@ Route::group(['middleware'=>'isroleadmin'], function(){
     	});
     	Route::group(['prefix' => 'category'], function(){
     		Route::get('list',['uses'=>'CategoryController@getCateList']);
-            
+
     		Route::group(['prefix' => 'ajax'], function(){
     			Route::get('list/{max}/{page}',['uses'=>'CategoryController@getCateListAjax']);
     			Route::get('total',['uses'=>'CategoryController@getTotalCategoriesAjax']);
@@ -59,7 +59,7 @@ Route::group(['middleware'=>'isroleadmin'], function(){
     	});
     	Route::group(['prefix' => 'system'], function(){
     		Route::get('list',['uses'=>'SystemController@getSystemList']);
-            
+
     		Route::group(['prefix' => 'ajax'], function(){
     			Route::get('list/{max}/{page}',['uses'=>'SystemController@getSystemListAjax']);
     			Route::get('total',['uses'=>'SystemController@getTotalSystemAjax']);
@@ -92,23 +92,24 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 Route::group(['middleware'=>'isrolemanager'], function(){
 	Route::group(['prefix' => 'managersites'], function(){
 		Route::get('/', function(){
-    		return view('managers.dashboard.main');
-    	});
-	    Route::group(['prefix' => 'software'], function(){
-	    	Route::get('add',['uses'=>'SoftwareController@getAddSoftwareManager']);
-	        Route::post('add',['uses'=>'SoftwareController@postAddSoftwareManager']);
-	        Route::get('edit/{id}',['uses'=>'SoftwareController@getEditSoftwareManager']);
-	        Route::post('edit/{id}',['uses'=>'SoftwareController@postEditSoftwareManager']);
-	        Route::get('detail/{id}',['uses'=>'SoftwareController@getDetailSoftwareManager']);
-	        Route::get('list',['uses'=>'SoftwareController@getListSoftwareManager']);
-	    	Route::group(['prefix' => 'ajax'], function(){
-	    		Route::get('list/{max}/{page}',['uses'=>'SoftwareController@getSoftwareListAjax']);
-      			Route::get('total',['uses'=>'SoftwareController@getTotalSoftwareAjax']);
-      			Route::get('setstatus/{softwareid}/{status}',['uses'=>'SoftwareController@getSetStatusAjax']);
-      			Route::get('delete/{id}',['uses'=>'SoftwareController@getDeleteSoftwareAjax']);
-	    	});
-	    });
-    	
-	});
-	
+          return view('managers.dashboard.main');
+      });
+
+        Route::group(['prefix' => 'post'], function(){
+           Route::get('add',['uses'=>'PostController@getAddPostManager']);
+           Route::post('add',['uses'=>'PostController@postAddPostManager']);
+           Route::get('edit/{id}',['uses'=>'PostController@getEditPostManager']);
+           Route::post('edit/{id}',['uses'=>'PostController@postEditPostManager']);
+           Route::get('detail/{id}',['uses'=>'PostController@getDetailPostManager']);
+           Route::get('list',['uses'=>'PostController@getListPostManager']);
+           Route::group(['prefix' => 'ajax'], function(){
+            Route::get('list/{max}/{page}',['uses'=>'PostController@getPostListAjax']);
+            Route::get('total',['uses'=>'PostController@getTotalPostAjax']);
+            Route::get('setstatus/{softwareid}/{status}',['uses'=>'PostController@getSetStatusAjax']);
+            Route::get('delete/{id}',['uses'=>'PostController@getDeletePostAjax']);
+        });
+       });
+
+    });
+
 });

@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Category;
 use App\Http\Requests;
-
+use App\Post;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+use App\User;
 class PostController extends Controller
 {
   public function getListPostManager()
@@ -13,7 +17,16 @@ class PostController extends Controller
 
       $cates = Category::get();
       $users = User::get();
-        return view('managers.post.list',['cates'=>$cates,'users'=>$users]);
+        return view('managers.posts.list',['cates'=>$cates,'users'=>$users]);
+    }
+    private function makeimagedir($path)
+    {
+      if (!file_exists(public_path() .'/'. $path )) {
+        $oldmask = umask(0);
+        mkdir(public_path() .'/'. $path , 0777, true);
+        umask($oldmask);
+      }
+      return;
     }
     public function getAddPostManager()
     {
@@ -38,18 +51,22 @@ class PostController extends Controller
       if(strlen($file) >0){
             $filename = str_slug($request->txtTitle, "-").'-'.time().'_'.$file->getClientOriginalName();
             $destinationPath = 'upload/images/posts';
+            $this->makeimagedir($destinationPath.'/'.getenvconf('BigImageWidth').'x'.getenvconf('BigImageHeight').'/');
+            $this->makeimagedir($destinationPath.'/'.getenvconf('MediumImageWidth').'x'.getenvconf('MediumImageHeight').'/');
+            $this->makeimagedir($destinationPath.'/'.getenvconf('SmallImageWidth').'x'.getenvconf('SmallImageHeight').'/');
+            $this->makeimagedir($destinationPath.'/'.getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight').'/');
              $img = Image::make($file);
             $file->move($destinationPath,$filename);
          //   $img = Image::make($destinationPath.'/'.$filename);
 
-            $img->resize(128, 128);
-            $img->save($destinationPath.'/128x128/'.$filename);
-            $img->resize(96, 96);
-            $img->save($destinationPath.'/96x96/'.$filename);
-            $img->resize(64, 64);
-            $img->save($destinationPath.'/64x64/'.$filename);
-            $img->resize(32, 32);
-            $img->save($destinationPath.'/32x32/'.$filename);
+            $img->resize(getenvconf('BigImageWidth'), getenvconf('BigImageHeight'));
+            $img->save($destinationPath.'/'.getenvconf('BigImageWidth').'x'.getenvconf('BigImageHeight').'/'.$filename);
+            $img->resize(getenvconf('MediumImageWidth'), getenvconf('MediumImageHeight'));
+            $img->save($destinationPath.'/'.getenvconf('MediumImageWidth').'x'.getenvconf('MediumImageHeight').'/'.$filename);
+            $img->resize(getenvconf('SmallImageWidth'), getenvconf('SmallImageHeight'));
+            $img->save($destinationPath.'/'.getenvconf('SmallImageWidth').'x'.getenvconf('SmallImageHeight').'/'.$filename);
+            $img->resize(getenvconf('TinyImageWidth'), getenvconf('TinyImageHeight'));
+            $img->save($destinationPath.'/'.getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight').'/'.$filename);
             $post->image= $filename;
         }
         $post->save();
@@ -76,21 +93,25 @@ class PostController extends Controller
       $post->user_id = Auth::user()->id;
       $file = $request->file('fileImage');
       if(strlen($file) >0){
-            $filename = str_slug($request->txtTitle, "-").'-'.time().'_'.$file->getClientOriginalName();
-            $destinationPath = 'upload/images/posts';
-             $img = Image::make($file);
-            $file->move($destinationPath,$filename);
-         //   $img = Image::make($destinationPath.'/'.$filename);
+        $filename = str_slug($request->txtTitle, "-").'-'.time().'_'.$file->getClientOriginalName();
+        $destinationPath = 'upload/images/posts';
+        $this->makeimagedir($destinationPath.'/'.getenvconf('BigImageWidth').'x'.getenvconf('BigImageHeight').'/');
+        $this->makeimagedir($destinationPath.'/'.getenvconf('MediumImageWidth').'x'.getenvconf('MediumImageHeight').'/');
+        $this->makeimagedir($destinationPath.'/'.getenvconf('SmallImageWidth').'x'.getenvconf('SmallImageHeight').'/');
+        $this->makeimagedir($destinationPath.'/'.getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight').'/');
+         $img = Image::make($file);
+        $file->move($destinationPath,$filename);
+      //   $img = Image::make($destinationPath.'/'.$filename);
 
-            $img->resize(128, 128);
-            $img->save($destinationPath.'/128x128/'.$filename);
-            $img->resize(96, 96);
-            $img->save($destinationPath.'/96x96/'.$filename);
-            $img->resize(64, 64);
-            $img->save($destinationPath.'/64x64/'.$filename);
-            $img->resize(32, 32);
-            $img->save($destinationPath.'/32x32/'.$filename);
-            $post->image= $filename;
+        $img->resize(getenvconf('BigImageWidth'), getenvconf('BigImageHeight'));
+        $img->save($destinationPath.'/'.getenvconf('BigImageWidth').'x'.getenvconf('BigImageHeight').'/'.$filename);
+        $img->resize(getenvconf('MediumImageWidth'), getenvconf('MediumImageHeight'));
+        $img->save($destinationPath.'/'.getenvconf('MediumImageWidth').'x'.getenvconf('MediumImageHeight').'/'.$filename);
+        $img->resize(getenvconf('SmallImageWidth'), getenvconf('SmallImageHeight'));
+        $img->save($destinationPath.'/'.getenvconf('SmallImageWidth').'x'.getenvconf('SmallImageHeight').'/'.$filename);
+        $img->resize(getenvconf('TinyImageWidth'), getenvconf('TinyImageHeight'));
+        $img->save($destinationPath.'/'.getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight').'/'.$filename);
+        $post->image= $filename;
         }
         $post->save();
       $url="managersites/post/detail/".$post->id;
@@ -105,7 +126,7 @@ class PostController extends Controller
       $post = Post::join('users','users.id','=','posts.user_id')
       ->join('categories','categories.id','=','posts.cate_id')
 
-      ->select('posts.id','posts.name','posts.image','posts.slug','posts.description','posts.version','posts.size','posts.content','posts.downloaded','posts.view','posts.share','posts.publisher_name','posts.publisher_url','posts.direct_link','posts.mirror_link1','posts.mirror_link2','posts.crack_link','categories.name as cate_name','users.firstname as user_firstname','users.lastname as user_lastname')
+      ->select('posts.id','posts.image','posts.title','posts.slug','posts.description','posts.content','posts.view','posts.share','categories.name as cate_name','users.firstname as user_firstname','users.lastname as user_lastname')
       ->findOrFail($id);
       return view('managers.posts.detail',['post'=>$post]);
     }
@@ -176,33 +197,33 @@ class PostController extends Controller
     public function getPostListAjax(Request $request, $max, $page)
   {
 
-      $numberRecord= $max;
-        $vitri =($page -1 ) * $numberRecord;
+    $numberRecord= $max;
+    $vitri =($page -1 ) * $numberRecord;
     $cateId = $request->cateid;
     $userId = $request->userid;
     $sysId = $request->sysid;
-      $keyword = $request->key;
-        $status = $request->status;
-        if($cateId == ""){
-            $cateId = null;
-        }
-        if($status == ""){
-            $status = null;
-        }
-        if($sysId == ""){
-            $sysId = null;
-        }
-        if($userId == ""){
-            $userId = null;
-        }
+    $keyword = $request->key;
+    $status = $request->status;
+    if($cateId == ""){
+      $cateId = null;
+    }
+    if($status == ""){
+      $status = null;
+    }
+    if($sysId == ""){
+      $sysId = null;
+    }
+    if($userId == ""){
+      $userId = null;
+    }
 
       $posts = Post::join('categories','categories.id','=','posts.cate_id')
 
         ->join('users','users.id','=','posts.user_id')
 
-      ->select('posts.id','posts.name','posts.version','posts.view','posts.share','posts.downloaded','posts.image','categories.name as cate_name','users.firstname as user_firstname','users.lastname as user_lastname','posts.status')
+      ->select('posts.id','posts.title','posts.view','posts.share','posts.image','categories.name as cate_name','users.firstname as user_firstname','users.lastname as user_lastname','posts.status')
         ->where(function($query) use ($keyword){
-            $query->where('posts.name','LIKE','%'.$keyword.'%');
+            $query->where('posts.title','LIKE','%'.$keyword.'%');
         })
         ->where('posts.user_id','LIKE', $userId)
 

@@ -33,7 +33,7 @@
 </head>
 
 <body>
-    
+
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -53,7 +53,7 @@
 
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        {!! Auth::user()->lastname!!}  {!! Auth::user()->firstname!!} 
+                        {!! Auth::user()->lastname!!}  {!! Auth::user()->firstname!!}
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
@@ -73,30 +73,30 @@
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse collapse">
-                    
+
                     <ul class="nav" id="side-menu">
-                        
+
                         <li>
                             <a href="{!! url('managersites') !!}"><i class="fa fa-dashboard fa-fw"></i> Trang chủ</a>
                         </li>
                          <li>
-                            <a href="{!! url('managersites/software/add') !!}">Thêm software</a>
+                            <a href="{!! url('managersites/post/add') !!}">Thêm post</a>
                         </li>
 
 
 
-    
 
 
-          
+
+
                              <li>
-                            <a href="{{ url('managersites/software/list') }}">
-                           
-                                Danh sách softwares</a>
-           
+                            <a href="{{ url('managersites/post/list') }}">
+
+                                Danh sách post</a>
+
                             <!-- /.nav-second-level -->
                         </li>
-                                            
+
 
 
                     </ul>
@@ -115,7 +115,7 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                @include('blocks.error')  
+                @include('blocks.error')
                 @include('blocks.flash')
                 @yield('content')
 
@@ -141,7 +141,7 @@
     <!-- Custom Theme JavaScript -->
     <script src="<?php echo asset('template/dist/js/sb-admin-2.js') ; ?>"></script>
     <script src="<?php echo asset('app/lib/angular.min.js') ; ?>"></script>
-    <script src="<?php echo asset('app/app.js') ; ?>"></script>   
+    <script src="<?php echo asset('app/app.js') ; ?>"></script>
 @yield('footer')
 </body>
 
