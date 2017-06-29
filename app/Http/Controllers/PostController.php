@@ -59,13 +59,13 @@ class PostController extends Controller
             $file->move($destinationPath,$filename);
          //   $img = Image::make($destinationPath.'/'.$filename);
 
-            $img->resize(getenvconf('BigImageWidth'), getenvconf('BigImageHeight'));
+            $img->fit(getenvconf('BigImageWidth'), getenvconf('BigImageHeight'));
             $img->save($destinationPath.'/'.getenvconf('BigImageWidth').'x'.getenvconf('BigImageHeight').'/'.$filename);
-            $img->resize(getenvconf('MediumImageWidth'), getenvconf('MediumImageHeight'));
+            $img->fit(getenvconf('MediumImageWidth'), getenvconf('MediumImageHeight'));
             $img->save($destinationPath.'/'.getenvconf('MediumImageWidth').'x'.getenvconf('MediumImageHeight').'/'.$filename);
-            $img->resize(getenvconf('SmallImageWidth'), getenvconf('SmallImageHeight'));
+            $img->fit(getenvconf('SmallImageWidth'), getenvconf('SmallImageHeight'));
             $img->save($destinationPath.'/'.getenvconf('SmallImageWidth').'x'.getenvconf('SmallImageHeight').'/'.$filename);
-            $img->resize(getenvconf('TinyImageWidth'), getenvconf('TinyImageHeight'));
+            $img->fit(getenvconf('TinyImageWidth'), getenvconf('TinyImageHeight'));
             $img->save($destinationPath.'/'.getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight').'/'.$filename);
             $post->image= $filename;
         }
@@ -103,13 +103,13 @@ class PostController extends Controller
         $file->move($destinationPath,$filename);
       //   $img = Image::make($destinationPath.'/'.$filename);
 
-        $img->resize(getenvconf('BigImageWidth'), getenvconf('BigImageHeight'));
+        $img->fit(getenvconf('BigImageWidth'), getenvconf('BigImageHeight'));
         $img->save($destinationPath.'/'.getenvconf('BigImageWidth').'x'.getenvconf('BigImageHeight').'/'.$filename);
-        $img->resize(getenvconf('MediumImageWidth'), getenvconf('MediumImageHeight'));
+        $img->fit(getenvconf('MediumImageWidth'), getenvconf('MediumImageHeight'));
         $img->save($destinationPath.'/'.getenvconf('MediumImageWidth').'x'.getenvconf('MediumImageHeight').'/'.$filename);
-        $img->resize(getenvconf('SmallImageWidth'), getenvconf('SmallImageHeight'));
+        $img->fit(getenvconf('SmallImageWidth'), getenvconf('SmallImageHeight'));
         $img->save($destinationPath.'/'.getenvconf('SmallImageWidth').'x'.getenvconf('SmallImageHeight').'/'.$filename);
-        $img->resize(getenvconf('TinyImageWidth'), getenvconf('TinyImageHeight'));
+        $img->fit(getenvconf('TinyImageWidth'), getenvconf('TinyImageHeight'));
         $img->save($destinationPath.'/'.getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight').'/'.$filename);
         $post->image= $filename;
         }

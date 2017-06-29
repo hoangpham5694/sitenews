@@ -13,10 +13,13 @@
 }
 img.detail{
 	
-	max-width:350px;
+	max-width:100%;
 }
 .description{
 	font-weight: bold;
+}
+.post-content img{
+    max-width:100%;
 }
 </style>
 
@@ -75,7 +78,10 @@ img.detail{
 
 	<p class="description">{{$post->description}}</p>
 <br>
-{!!$post->content!!}
+<div class="post-content">
+	{!!$post->content!!}
+</div>
+
 
 @endsection
 @section('footer')
