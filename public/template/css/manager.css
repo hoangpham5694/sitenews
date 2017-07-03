@@ -48,3 +48,6 @@ body{
     }
 }
 
+.sidebar ul li a.active {
+    background-color: #6d6d6d;
+}

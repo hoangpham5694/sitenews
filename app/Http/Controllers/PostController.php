@@ -55,19 +55,27 @@ class PostController extends Controller
             $this->makeimagedir($destinationPath.'/'.getenvconf('MediumImageWidth').'x'.getenvconf('MediumImageHeight').'/');
             $this->makeimagedir($destinationPath.'/'.getenvconf('SmallImageWidth').'x'.getenvconf('SmallImageHeight').'/');
             $this->makeimagedir($destinationPath.'/'.getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight').'/');
-             $img = Image::make($file);
-            $file->move($destinationPath,$filename);
+            $this->makeimagedir($destinationPath.'/'.getenvconf('VerticalImageWidth').'x'.getenvconf('VerticalImageHeight').'/');
+            $img = Image::make($file);
+            
          //   $img = Image::make($destinationPath.'/'.$filename);
 
             $img->fit(getenvconf('BigImageWidth'), getenvconf('BigImageHeight'));
             $img->save($destinationPath.'/'.getenvconf('BigImageWidth').'x'.getenvconf('BigImageHeight').'/'.$filename);
+            $img = Image::make($file);
             $img->fit(getenvconf('MediumImageWidth'), getenvconf('MediumImageHeight'));
             $img->save($destinationPath.'/'.getenvconf('MediumImageWidth').'x'.getenvconf('MediumImageHeight').'/'.$filename);
+            $img = Image::make($file);
             $img->fit(getenvconf('SmallImageWidth'), getenvconf('SmallImageHeight'));
             $img->save($destinationPath.'/'.getenvconf('SmallImageWidth').'x'.getenvconf('SmallImageHeight').'/'.$filename);
+            $img = Image::make($file);
             $img->fit(getenvconf('TinyImageWidth'), getenvconf('TinyImageHeight'));
             $img->save($destinationPath.'/'.getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight').'/'.$filename);
+            $img = Image::make($file);
+            $img->fit(getenvconf('VerticalImageWidth'), getenvconf('VerticalImageHeight'));
+            $img->save($destinationPath.'/'.getenvconf('VerticalImageWidth').'x'.getenvconf('VerticalImageHeight').'/'.$filename);
             $post->image= $filename;
+            $file->move($destinationPath,$filename);
         }
         $post->save();
         $url="managersites/post/detail/".$post->id;
@@ -99,19 +107,27 @@ class PostController extends Controller
         $this->makeimagedir($destinationPath.'/'.getenvconf('MediumImageWidth').'x'.getenvconf('MediumImageHeight').'/');
         $this->makeimagedir($destinationPath.'/'.getenvconf('SmallImageWidth').'x'.getenvconf('SmallImageHeight').'/');
         $this->makeimagedir($destinationPath.'/'.getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight').'/');
-         $img = Image::make($file);
-        $file->move($destinationPath,$filename);
+        $this->makeimagedir($destinationPath.'/'.getenvconf('VerticalImageWidth').'x'.getenvconf('VerticalImageHeight').'/');
+        $img = Image::make($file);
+        
       //   $img = Image::make($destinationPath.'/'.$filename);
 
         $img->fit(getenvconf('BigImageWidth'), getenvconf('BigImageHeight'));
         $img->save($destinationPath.'/'.getenvconf('BigImageWidth').'x'.getenvconf('BigImageHeight').'/'.$filename);
+        $img = Image::make($file);
         $img->fit(getenvconf('MediumImageWidth'), getenvconf('MediumImageHeight'));
         $img->save($destinationPath.'/'.getenvconf('MediumImageWidth').'x'.getenvconf('MediumImageHeight').'/'.$filename);
+        $img = Image::make($file);
         $img->fit(getenvconf('SmallImageWidth'), getenvconf('SmallImageHeight'));
         $img->save($destinationPath.'/'.getenvconf('SmallImageWidth').'x'.getenvconf('SmallImageHeight').'/'.$filename);
+        $img = Image::make($file);
         $img->fit(getenvconf('TinyImageWidth'), getenvconf('TinyImageHeight'));
         $img->save($destinationPath.'/'.getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight').'/'.$filename);
+        $img = Image::make($file);
+        $img->fit(getenvconf('VerticalImageWidth'), getenvconf('VerticalImageHeight'));
+        $img->save($destinationPath.'/'.getenvconf('VerticalImageWidth').'x'.getenvconf('VerticalImageHeight').'/'.$filename);
         $post->image= $filename;
+        $file->move($destinationPath,$filename);
         }
         $post->save();
       $url="managersites/post/detail/".$post->id;

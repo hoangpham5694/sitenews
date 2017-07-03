@@ -20,6 +20,7 @@ img.detail{
 }
 .post-content img{
     max-width:100%;
+    height: auto;
 }
 </style>
 

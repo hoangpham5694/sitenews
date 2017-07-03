@@ -51,12 +51,12 @@ app.controller('PostListController', function($scope, $http, API,$timeout){
 		getListPosts(maxRecord,1);
 	}
 	$scope.delete = function(id){
-		var isConfirmDelete = confirm('Bạn có chắc muốn xóa video này không');
+		var isConfirmDelete = confirm('Bạn có chắc muốn xóa bài viết này không');
 		if(isConfirmDelete){
 			$http.get(API + 'managersites/post/ajax/delete/'+id).then(function successCallback (response){
 			console.log(response);
 			console.log($scope.page);
-			getListposts(maxRecord,$scope.page);
+			getListPosts(maxRecord,$scope.page);
 		//	alert(response.data);
 			}  , function errorCallback(response) {
 			console.log(response);

@@ -91,7 +91,9 @@
                                                 <li>
                             <a href="{!! url('adminsites/user/list') !!}">Quản lý User</a>
                         </li>
-
+                                                <li>
+                            <a href="{!! url('managersites') !!}">Manager Mode</a>
+                        </li>
 
 
  

@@ -96,8 +96,15 @@
 
                             <!-- /.nav-second-level -->
                         </li>
+                        @if( Auth::user()->level ==1)
+                             <li>
+                            <a href="{{ url('adminsites') }}">
 
+                                Admin mode</a>
 
+                            <!-- /.nav-second-level -->
+                        </li>
+                        @endif
 
                     </ul>
                 </div>
