@@ -15,6 +15,7 @@ class HomeController extends Controller
     }
     public function getIndex()
     {
+        
         if(is_mobile()){
            return view('guests.mobile.index'); 
         }

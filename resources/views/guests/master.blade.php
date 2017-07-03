@@ -239,7 +239,7 @@
 <script src="{{asset('template/assets/js/script.js')}}"></script> 
 
 <!-- Off Canvas Menu -->
- 
+ <script src="{{asset('template/assets/js/offcanvas.min.js')}}"></script> 
 
 @yield('footer')
 

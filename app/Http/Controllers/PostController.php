@@ -207,6 +207,20 @@ class PostController extends Controller
          $post->save();
          return "Set status: ".$status;
     }
+    public function getMakeFeatureAjax($postid)
+    {
+         $post = Post::findOrFail($postid);
+         $post->featured_at =  new DateTime();
+         $post->save();
+         return "success";
+    }
+    public function getUndoFeatureAjax($postid)
+    {
+         $post = Post::findOrFail($postid);
+         $post->featured_at =  null;
+         $post->save();
+         return "success";
+    }
 
 
 

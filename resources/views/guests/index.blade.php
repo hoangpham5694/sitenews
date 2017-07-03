@@ -426,7 +426,7 @@
             </div><!--col-md-9-->
 
             <div class="col-md-3">
-
+                @include('guests.inc.slide-bar')
             </div>
         </div>      
 </section><!--feature_category_section-->

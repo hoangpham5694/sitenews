@@ -18,21 +18,11 @@ Route::get('{softwareslug}.{softwareid}.html',['uses'=>'HomeController@getDetail
 Route::get('download/{softwareslug}.{softwareid}.html',['uses'=>'HomeController@getDownloadPost']);
 Route::get('tim-kiem.html',['uses'=>'HomeController@getSearchPost']);
 Route::group(['prefix' => 'api'], function(){
-	Route::group(['prefix' => 'system'], function(){
-		Route::get('list-systems',['uses'=>'SystemController@getListSystemSimpleAjax']);
-	});
+	
 	Route::group(['prefix' => 'category'], function(){
 		Route::get('list-cates',['uses'=>'CategoryController@getListCateAjax']);
 	});
-	Route::group(['prefix' => 'software'], function(){
-		Route::get('most-download/{number?}',['uses'=>'PostController@getMostDownloadPostAjax']);
-		Route::get('highest-view-in-system/{sysid?}',['uses'=>'PostController@getHighestViewPostInsystemAjax']);
-		Route::get('list-newest/{offset?}/{max?}',['uses'=>'PostController@getListNewestPostAjax']);
-		Route::get('list-last-update/{offset?}/{max?}',['uses'=>'PostController@getListLastUpdateAjax']);
-		Route::get('list-random/{max?}',['uses'=>'PostController@getListRandomAjax']);
-		Route::get('list-with-cate/{max}/{page}',['uses'=>'PostController@getListPostWithCateAjax']);
-		//Route::get('total-with-cate/{cateid}',['uses'=>'PostController@getTotalPostWithCateAjax']);
-	});
+	
 
 
 });
@@ -57,17 +47,7 @@ Route::group(['middleware'=>'isroleadmin'], function(){
                 Route::get('delete/{id}',['uses'=>'CategoryController@getDeleteCateAjax']);
     		});
     	});
-    	Route::group(['prefix' => 'system'], function(){
-    		Route::get('list',['uses'=>'SystemController@getSystemList']);
 
-    		Route::group(['prefix' => 'ajax'], function(){
-    			Route::get('list/{max}/{page}',['uses'=>'SystemController@getSystemListAjax']);
-    			Route::get('total',['uses'=>'SystemController@getTotalSystemAjax']);
-    			Route::get('add',['uses'=>'SystemController@getAddSystemAjax']);
-                Route::get('edit',['uses'=>'SystemController@getEditSystemAjax']);
-                Route::get('delete/{id}',['uses'=>'SystemController@getDeleteSystemAjax']);
-    		});
-    	});
         Route::group(['prefix' => 'user'], function(){
             Route::get('list',['uses'=>'UserController@getUserList']);
             Route::get('add',['uses'=>'UserController@getUserAdd']);
@@ -107,6 +87,8 @@ Route::group(['middleware'=>'isrolemanager'], function(){
             Route::get('total',['uses'=>'PostController@getTotalPostAjax']);
             Route::get('setstatus/{softwareid}/{status}',['uses'=>'PostController@getSetStatusAjax']);
             Route::get('delete/{id}',['uses'=>'PostController@getDeletePostAjax']);
+            Route::get('make-feature/{id}',['uses'=>'PostController@getMakeFeaturePostAjax']);
+            Route::get('undo-feature/{id}',['uses'=>'PostController@getUndoFeaturePostAjax']);
         });
        });
 
