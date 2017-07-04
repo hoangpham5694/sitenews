@@ -74,10 +74,11 @@
       <th>Danh mục</th>
      
       <th>Lưọt xem</th>
-
+  <th>Feature</th>
       <th>Status</th>
-      <th>Set status</th>
-      <th></th>
+
+<th></th>
+ 
     </tr>
   </thead>
   <tbody>
@@ -88,11 +89,33 @@
     <td>{%post.cate_name%}</td>
   
      <td>{%post.view%}</td>
-    <td>{%post.status%}</td>
+  <td>
+    <div class="btn-group">
+    <button type="button" ng-class="{'btn-success':post.featured_at}" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+       <span ng-if="post.featured_at">Featured</span> <span ng-if="post.featured_at == null">Not Featured</span> <span class="caret"></span>
+     </button>
+     <ul class="dropdown-menu">
+      <li ng-if="post.featured_at==null"><a  href="" ng-click="setFeature(post.id,'set')" > <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Feature</a> </li>
+      <li ng-if="post.featured_at"> <a  href="" ng-click="setFeature(post.id,'undo')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>   Undo Featured</a>  </li>
+
+    </ul>
+  </div>
+  </td>
     <td> 
-    <button ng-click="setStatus(post.id,'active')" class="btn btn-success btn-xs" ng-disabled="post.status == 'active'">Active</button> 
-    <button ng-disabled="post.status == 'pending'" class="btn btn-warning btn-xs" ng-click="setStatus(post.id,'pending')">Pending</button>  
-    <button ng-disabled="post.status == 'stop'" class="btn btn-danger btn-xs" ng-click="setStatus(post.id,'stop')">Stop</button>
+<div class="btn-group">
+  <button type="button" ng-class="{'btn-success':post.status =='active','btn-warning':post.status =='pending','btn-danger':post.status =='stop'}" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   {%post.status%} <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a ng-click="setStatus(post.id,'active')"  class="btn btn-success btn-xs" ng-disabled="post.status == 'active'">Active</a> </li>
+  <li> <a ng-disabled="post.status == 'pending'" class="btn btn-warning btn-xs" ng-click="setStatus(post.id,'pending')">Pending</a>  </li>
+   <li>  <a ng-disabled="post.status == 'stop'" class="btn btn-danger btn-xs" ng-click="setStatus(post.id,'stop')">Stop</a></li>
+  </ul>
+</div>
+
+    
+   
+  
    </td>
     <td>
      <a class="btn btn-xs btn-primary" ng-href="{{ url('managersites/post/detail') }}/{%post.id%}" >

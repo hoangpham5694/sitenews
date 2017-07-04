@@ -96,22 +96,20 @@
                 <div id="navbar" class="collapse navbar-collapse sidebar-offcanvas">
                 <ul class="nav navbar-nav">
                     <li class="hidden"><a href="#page-top"></a></li>
-                    <li><a class="page-scroll" href="category.html">Baseball</a></li>
-                    <li><a class="page-scroll" href="category.html">Football</a></li>
-                    <li><a class="page-scroll" href="category.html">Hockey</a></li>
-                    <li><a class="page-scroll" href="category.html">Basketball</a></li>
-                    <li><a class="page-scroll" href="category.html">Boxing</a></li>
-                    <li><a class="page-scroll" href="category.html">Golf</a></li>
-                    <li><a class="page-scroll" href="category.html">Tennis</a></li>
-                    <li><a class="page-scroll" href="category.html">Horse racing</a></li>
-                    <li><a class="page-scroll" href="category.html">Track & Field</a></li>
+                      @foreach(\App\Category::where("main", '1')->get() as $categorys)
+                    <li><a class="page-scroll" href="category.html">{{$categorys->name}}</a></li>
+                      @endforeach
+                    
+                  
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Nhiều hơn <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
+                        @foreach(\App\Category::where("main", '0')->get() as $categorys)
+                             <li><a href="#">{{$categorys->name}}</a></li>
+                        @endforeach
+                           
+
                         </ul>
                     </li>
                 </ul>

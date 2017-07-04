@@ -11,7 +11,7 @@
                                     <tr>
                                         <th>Mã</th>
                                         <th>Tên</th>
-                                        <th>Số lượng softs</th>
+                                        <th>Số lượng bài</th>
 
                                         <th></th>
                                     </tr>
@@ -20,7 +20,7 @@
                                 	<tr ng-repeat="category in categories">
                                 		<td>{% category.id %}</td>
                                 		<td>{% category.name %}</td>
-                                		<td>{% category.count_softs %}</td>
+                                		<td>{% category.count_posts %}</td>
                                 		
                                 		<td>
                                          <a class="btn btn-xs btn-primary" ng-click="modal('edit',category.id, category.name)" >

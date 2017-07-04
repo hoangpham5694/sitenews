@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use App\User;
+use DateTime;
 class PostController extends Controller
 {
   public function getListPostManager()
@@ -207,14 +208,17 @@ class PostController extends Controller
          $post->save();
          return "Set status: ".$status;
     }
-    public function getMakeFeatureAjax($postid)
+    public function getMakeFeaturePostAjax($postid)
     {
          $post = Post::findOrFail($postid);
-         $post->featured_at =  new DateTime();
-         $post->save();
+         if(!$post->featured_at){
+          $post->featured_at =  new DateTime();
+          $post->save();
+         }
+         
          return "success";
     }
-    public function getUndoFeatureAjax($postid)
+    public function getUndoFeaturePostAjax($postid)
     {
          $post = Post::findOrFail($postid);
          $post->featured_at =  null;
@@ -251,7 +255,7 @@ class PostController extends Controller
 
         ->join('users','users.id','=','posts.user_id')
 
-      ->select('posts.id','posts.title','posts.view','posts.share','posts.image','categories.name as cate_name','users.firstname as user_firstname','users.lastname as user_lastname','posts.status')
+      ->select('posts.id','posts.title','posts.view','posts.share','posts.image','categories.name as cate_name','users.firstname as user_firstname','users.lastname as user_lastname','posts.status','posts.featured_at')
         ->where(function($query) use ($keyword){
             $query->where('posts.title','LIKE','%'.$keyword.'%');
         })

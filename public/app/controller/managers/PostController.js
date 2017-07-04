@@ -87,6 +87,27 @@ app.controller('PostListController', function($scope, $http, API,$timeout){
   		}) ;
 		
 	}
-
+	$scope.setFeature = function(id,action){
+		var url="";
+		switch(action){
+			case 'set':
+				url=API + "managersites/post/ajax/make-feature/"+id;
+			break;
+			case 'undo':
+				url=API + "managersites/post/ajax/undo-feature/"+id;
+			break;
+		}
+		
+		console.log(url);
+		$http.get(url).then(function successCallback (response){
+			getListPosts(maxRecord,$scope.page);
+			console.log(response.data);
+		}  , function errorCallback(response) {
+			console.log(response);
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+  		}) ;
+		
+	}
 
 });
