@@ -10,40 +10,29 @@
                 <div class="feature_news_carousel">
                     <div id="featured-news-carousal" class="carousel slide" data-ride="carousel">
                         <!-- Wrapper for slides -->
-                        <div class="carousel-inner" role="listbox">                     
-                            <div class="item active feature_news_item">
+                        <div class="carousel-inner" role="listbox">   
+                        <?php $count=0; ?>  
+                        @foreach($featurePosts as $featurePost)
+                            <?php $count++; ?>
+                            <div class="item <?php if($count==1) echo 'active'; ?> feature_news_item">
                                 <div class="item_wrapper">
                                     <div class="item_img">
-                                        <img class="img-responsive" src="template/assets/img/img-carousel1.jpg" alt="Chania">
+                                        <img class="img-responsive" src="{{asset('upload/images/posts/')}}/{{getenvconf('BigImageWidth').'x'.getenvconf('BigImageHeight')}}/{{$featurePost->image}} " alt="Chania">
                                     </div> <!--item_img-->
                                     <div class="item_title_date">
                                         <div class="news_item_title">
-                                            <h2><a href="single.html">Seamlessly embrace B2C catalysts for change vis-a-vis economically sound communities.</a></h2>
+                                            <h2><a href="single.html">{{ str_limit($featurePost->title, 80)}}</a></h2>
                                         </div>
-                                        <div class="item_meta"><a href="#">20Aug- 2015,</a> by:<a href="#">Jhonson</a></div>
+                                      
                                     </div> <!--item_title_date-->
                                 </div>  <!--item_wrapper-->
-                                <div class="item_content">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.</div>
+                                <div class="item_content">{{ str_limit($featurePost->description, 100)}}</div>
 
                             </div><!--feature_news_item-->
+                        @endforeach
 
-                            <div class="item feature_news_item">
-                                <div class="item_wrapper">
-                                    <div class="item_img">
-                                        <img class="img-responsive" src="template/assets/img/img-carousel2.jpg" alt="Chania">
-                                    </div> <!--item_img--> 
-                                    <div class="item_title_date">
-                                        <div class="news_item_title">
-                                            <h2><a href="#">Manchester United want to Back Cristiano Ronaldo natus error sit.</a></h2>
-                                        </div>
-                                        <div class="item_meta"><a href="#">20Aug- 2015,</a> by:<a href="#">Jhonson</a></div>
-                                    </div> <!--item_title_date-->
-                                </div> <!--item_wrapper-->  
-                                
-                                <div class="item_content">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
-                                </div>
 
-                            </div><!--feature_news_item-->
+
                              
 
                             <!-- Left and right controls -->
@@ -62,51 +51,38 @@
             
             <div class="col-md-6">
                 <div class="feature_news_static">
-                    <div class="row">                                
+                    <div class="row">         
+                    @foreach($newestPosts as $newestPost)                       
                         <div class="col-md-6">
                             <div class="feature_news_item">
                                 <div class="item active">
                                     <div class="item_wrapper">
                                         <div class="item_img">
-                                            <img class="img-responsive" src="template/assets/img/img_feature.jpg" alt="Chania">
+                                            <img class="img-responsive" src="{{asset('upload/images/posts/')}}/{{getenvconf('VerticalImageWidth').'x'.getenvconf('VerticalImageHeight')}}/{{$newestPost->image}}" alt="Chania">
                                         </div> <!--item_img-->
                                         <div class="item_title_date">
                                             <div class="news_item_title">
-                                                <h2><a href="single.html">Track Roboto the Real Tracker.</a></h2>
+                                                <h2><a href="single.html">{{str_limit($newestPost->title,30) }}</a></h2>
                                             </div>
-                                            <div class="item_meta"><a href="#">20Aug- 2015,</a> by:<a href="#">Jhonson</a></div>
+                                          
                                         </div><!--item_title_date-->
                                     </div> <!--item_wrapper-->
-                                    <div class="item_content">Sed ut perspiciatis unde omnis iste natus error sit  
+                                    <div class="item_content">{{str_limit($newestPost->description,51) }}
                                     </div>
 
                                 </div><!--item-->                            
                             </div><!--feature_news_item-->
                         </div>
-                        
-                        <div class="col-md-6">
-                            <div class="feature_news_item">
-                                <div class="item active">
-                                    <div class="item_wrapper">
-                                        <div class="item_img">
-                                            <img class="img-responsive" src="template/assets/img/img_feature2.jpg" alt="Chania">
-                                        </div> <!--item_img-->
-                                        <div class="item_title_date">
-                                            <div class="news_item_title">
-                                                <h2><a href="single.html">David villa change his team last year.</a></h2>
-                                            </div>
-                                            <div class="item_meta"><a href="#">20Aug- 2015,</a> by:<a href="#">Jhonson</a></div>
-                                        </div><!--item_title_date-->
-                                    </div> <!--item_wrapper-->
-                                    <div class="item_content">Sed ut perspiciatis unde omnis iste natus error sit  
-                                    </div>
+                    @endforeach
 
-                                </div><!--item-->                            
-                            </div><!--feature_news_item-->
-                        </div><!--col-xs-6-->
+
                     </div><!--row-->
+
+
                 </div><!--feature_news_static-->
             </div><!--col-md-6-->
+
+
         </div><!--row-->
     </div><!--container-->      
 </section><!--feature_news_section-->
@@ -115,10 +91,23 @@
     <div class="container">   
         <div class="row">
             <div class="col-md-9">
+
+
+            @foreach($cates as $cate)
                 <div class="category_layout">
-                    <div class="item_caregory red"><h2><a href="category.html">Football</a></h2></div>
+                    <div class="item_caregory red"><h2><a href="category.html">{{$cate->name}}</a></h2></div>
                         <div class="row">
+                        <?php
+                        $posts= $cate->posts();
+                        $postFirst = $posts->select('image','title','description','slug')->first();
+                        //echo $postFirst->title;
+
+                       
+                        ?>
+                        
+                           
                             <div class="col-md-7">
+                            
                                 <div class="item feature_news_item">
                                     <div class="item_wrapper">
                                         <div class="item_img">
@@ -126,7 +115,7 @@
                                         </div><!--item_img--> 
                                         <div class="item_title_date">
                                             <div class="news_item_title">
-                                                <h2><a href="#">22Leo Messi is boss of the bosses of the football world.</a></h2>
+                                                <h2><a href="#"></a></h2>
                                             </div><!--news_item_title-->
                                             <div class="item_meta"><a href="#">20Aug- 2015,</a> by:<a href="#">Jhonson</a></div>
                                         </div><!--item_title_date-->
@@ -135,66 +124,50 @@
                                     </div><!--item_content-->
 
                                 </div><!--feature_news_item-->
+                          
                             </div><!--col-md-7-->
                             
                             <div class="col-md-5">
                                 <div class="media_wrapper">
+                                <?php 
+                                     $posts = $posts->select('image','title','description','slug')->orderBy('created_at','DESC')->limit(5)->offset(1)->get(); 
+                                     $count=0;
+                                ?>
+                                 @foreach($posts as $post)
+
+                                    <?php $count++;?>
+                                    @if($count!=1)
                                     <div class="media">
                                         <div class="media-left">
                                             <a href="#"><img class="media-object" src="assets/img/img-list.jpg" alt="Generic placeholder image"></a>
                                         </div><!--media-left-->
                                         <div class="media-body">
-                                            <h3 class="media-heading"><a href="#">Machester United start the player
+                                            <h3 class="media-heading"><a href="#">{{$post->title}}
                                             </a></h3>
 
                                             <p>Sed perspiciatis unde omnis iste natus voluptatem.</p>
 
                                         </div><!--media-body-->
                                     </div><!--media-->
+                                    @endif
+                                @endforeach
+                             
+                                    
 
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <a href="#"><img class="media-object" src="assets/img/img-list2.jpg" alt="Generic placeholder image"></a>
-                                        </div><!--media-left-->
-                                        <div class="media-body">
-                                            <h3 class="media-heading"><a href="#">Machester United start the player
-                                            </a></h3>
 
-                                            <p>Sed perspiciatis unde omnis iste natus voluptatem.</p>
-
-                                        </div><!--media-body-->
-                                    </div><!--media-->
-
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <a href="#"><img class="media-object" src="assets/img/img-list3.jpg" alt="Generic placeholder image"></a>
-                                        </div><!--media-left-->
-                                        <div class="media-body">
-                                            <h3 class="media-heading"><a href="#">Machester United start the player
-                                            </a></h3>
-
-                                            <p>Sed perspiciatis unde omnis iste natus voluptatem.</p>
-
-                                        </div><!--media-body-->
-                                    </div><!--media-->
-
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <a href="#"><img class="media-object" src="assets/img/img-list4.jpg" alt="Generic placeholder image"></a>
-                                        </div><!--media-left-->
-                                        <div class="media-body">
-                                            <h3 class="media-heading"><a href="#">Machester United start the player
-                                            </a></h3>
-
-                                            <p>Sed perspiciatis unde omnis iste natus voluptatem.</p>
-
-                                        </div><!--media-body-->
-                                    </div><!--media-->
                                 </div><!--media_wrapper-->
                                  
                             </div><!--col-md-5-->
+                            
+                       
                         </div><!--row-->
                     </div><!--category_layout-->
+            @endforeach
+
+
+
+
+
 
                 <div class="category_layout">
                     <div class="item_caregory blue"><h2><a href="#">Hockey</a></h2></div>

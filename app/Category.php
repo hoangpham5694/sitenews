@@ -10,4 +10,8 @@ class Category extends Model
     protected $fillable = [
         'id','name','slug', 'created_at'
     ];
+    public function posts()
+    {
+        return $this->hasMany('App\Post','cate_id','id');
+    }
 }
