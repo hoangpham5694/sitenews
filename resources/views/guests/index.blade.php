@@ -177,7 +177,7 @@
 
 
                 
-                <div id="more_news_item" class="more_news_item">
+{{--                 <div id="more_news_item" class="more_news_item">
                     <div class="more_news_heading"><h2><a href="#">More News</a></h2></div>
                     <div class="row">
                         <div class="col-md-4">
@@ -243,7 +243,9 @@
                             </div><!--feature_news_item-->
                         </div><!--col-xs-4-->
                     </div><!--row-->    
-                </div><!--more_news_item--> 
+                </div><!--more_news_item-->  --}}
+
+                
             </div><!--col-md-9-->
 
             <div class="col-md-3">
@@ -253,7 +255,7 @@
 </section><!--feature_category_section-->
 
     <!-- Feature Video Item -->
-    <section id="feature_video_item" class="feature_video_item section_wrapper">
+{{--     <section id="feature_video_item" class="feature_video_item section_wrapper">
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
@@ -279,7 +281,7 @@
                             <div class="video_thumb"><img   src="assets/img/video3.jpg" alt="Owl Image"></div>
                             <div class="video_info">
                                 <div class="video_item_title"><h3><a href="#">Track & Fiels famous still in the craze of Runner world</a></h3></div><!--video_item_title-->
-                                <div class="item_meta"><a href="#">20Aug- 2015</a></div><!--item_meta-->
+                                <div class="item_meta"><a href="#">20Aug- 2015</a></div>item_meta
                             </div><!--video_info-->
                         </div>
                         <div class="item">
@@ -312,7 +314,7 @@
     </div><!--container-->
 </section>
 
-
+ --}}
 @endsection
 @section('footer')
 

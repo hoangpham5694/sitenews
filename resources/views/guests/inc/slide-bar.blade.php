@@ -5,6 +5,11 @@
     ->where('created_at','>=',date('Y-m-d',strtotime("-7 days")))
     ->orderBy('view','DESC')
     ->limit(5)->get();
+    $recommentPosts = App\Post::select('title','description','slug','image','created_at')->where('status','=','active')
+    ->where('created_at','<=',date("Y-m-d") )
+    ->where('created_at','>=',date('Y-m-d',strtotime("-7 days")))
+    ->inRandomOrder()
+    ->limit(8)->get();
   //  echo date('Y-m-d',strtotime("-7 days"));
   //  dd($topViewPosts);
 ?>
@@ -19,7 +24,7 @@
                         @foreach($lastestPosts as $lastestPost)
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="#"><img class="media-object" src="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$lastestPost->image}}" alt="Generic placeholder image"></a>
+                                    <a href="#"><img class="media-object" src="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$lastestPost->image}}" alt="{{$lastestPost->title}}"></a>
                                 </div><!--media-left-->
                                 <div class="media-body">
                                     <h4 class="media-heading"><a href="#">{{str_limit($lastestPost->title,40)}}</a></h4>
@@ -43,16 +48,16 @@
                         @foreach($topViewPosts as $topViewPost)
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="#"><img class="media-object" src="assets/img/img-list4.jpg" alt="Generic placeholder image"></a>
+                                    <a href="#"><img class="media-object" src="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$topViewPost->image}}" alt="{{$topViewPost->title}}"></a>
                                 </div><!--media-left-->
                                 <div class="media-body">
-                                    <h3 class="media-heading"><a href="#">Spain going to made class football</a></h3>
+                                    <h3 class="media-heading"><a href="#">{{str_limit($topViewPost->title,40)}}</a></h3>
                                     <span class="rating">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-full"></i>
+                                        <i class="fa fa-star"></i>
                                     </span>
                                 </div><!--media-body-->
                             </div><!--media-->
@@ -80,54 +85,24 @@
 
                 <div class="most_comment">
                     <div class="sidebar_title">
-                        <h2>Most Commented</h2>
+                        <h2>Đề xuất</h2>
                     </div>
+                    @foreach($recommentPosts as $recommentPost)
                     <div class="media">
                         <div class="media-left">
-                            <a href="#"><img class="media-object" src="assets/img/img-list.jpg" alt="Generic placeholder image"></a>
+                            <a href="#"><img class="media-object" src="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$recommentPost->image}}" alt="Generic placeholder image"></a>
                         </div><!--media-left-->
                         <div class="media-body">
-                            <h3 class="media-heading"><a href="#">Spain going to made class football</a></h3>
+                            <h3 class="media-heading"><a href="#">{{str_limit($recommentPost->title,37)}}</a></h3>
                              <div class="comment_box">
-                                <div class="comments_icon"> <i class="fa fa-comments" aria-hidden="true"></i></div>
-                                 <div class="comments"><a href="#">9 Comments</a></div>
+                                
+                                 <div class="comments">
+                                        <?php \Carbon\Carbon::setLocale('vi');?>
+                    {!! \Carbon\Carbon::createFromTimeStamp(strtotime($recommentPost->created_at))->diffForHumans() !!}
+                                 </div>
                              </div><!--comment_box-->
                         </div><!--media-body-->
                     </div><!--media-->
-                    <div class="media">
-                        <div class="media-left">
-                            <a href="#"><img class="media-object" src="assets/img/img-list2.jpg" alt="Generic placeholder image"></a>
-                        </div><!--media-left-->
-                        <div class="media-body">
-                            <h3 class="media-heading"><a href="#">Spain going to made class football</a></h3>
-                            <div class="comment_box">
-                                <div class="comments_icon"> <i class="fa fa-comments" aria-hidden="true"></i></div>
-                                <div class="comments"><a href="#">20 Comments</a></div>
-                            </div><!--comment_box-->
-                        </div><!--media-body-->
-                    </div><!--media-->
-                    <div class="media">
-                        <div class="media-left">
-                            <a href="#"><img class="media-object" src="assets/img/img-list3.jpg" alt="Generic placeholder image"></a>
-                        </div><!--media-left-->
-                        <div class="media-body">
-                            <h3 class="media-heading"><a href="#">Spain going to made class football</a></h3>
-                            <div class="comment_box">
-                                <div class="comments_icon"> <i class="fa fa-comments" aria-hidden="true"></i></div>
-                                <div class="comments"><a href="#">23 Comments</a></div>
-                            </div><!--comment_box-->
-                        </div><!--media-body-->
-                    </div><!--media-->
-                    <div class="media">
-                        <div class="media-left">
-                            <a href="#"><img class="media-object" src="assets/img/img-list3.jpg" alt="Generic placeholder image"></a>
-                        </div><!--media-left-->
-                        <div class="media-body">
-                            <h3 class="media-heading"><a href="#">Spain going to made class football</a></h3>
-                            <div class="comment_box">
-                                <div class="comments_icon"> <i class="fa fa-comments" aria-hidden="true"></i></div>
-                                <div class="comments"><a href="#">44 Comments</a></div>
-                            </div><!--comment_box-->
-                        </div><!--media-body-->
-                    </div><!--media-->
+                    @endforeach  
+                  
                 </div><!--most_comment-->

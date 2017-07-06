@@ -14,7 +14,7 @@
 Route::get('/', ['uses'=>'HomeController@getIndex']);
 Route::get('danh-muc/{cateslug}.{cateid}',['uses'=>'HomeController@getListPostSWithCate']);
 Route::get('he-dieu-hanh/{systemslug}.{systemid}',['uses'=>'HomeController@getListPostsWithSystem']);
-Route::get('{softwareslug}.{softwareid}.html',['uses'=>'HomeController@getDetailPost']);
+Route::get('{systemslug}/{slug}.{id}.html',['uses'=>'HomeController@getDetailPost']);
 Route::get('download/{softwareslug}.{softwareid}.html',['uses'=>'HomeController@getDownloadPost']);
 Route::get('tim-kiem.html',['uses'=>'HomeController@getSearchPost']);
 Route::group(['prefix' => 'api'], function(){

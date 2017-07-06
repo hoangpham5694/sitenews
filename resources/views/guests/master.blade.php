@@ -56,14 +56,14 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="logo">
-                        <a  href="index.html"><img class="img-responsive" src="template/assets/img/logo.png" alt=""></a>
+                        <a  href="index.html"><img class="img-responsive" src="{{asset('template/assets/img/logo.png')}}" alt=""></a>
                         </div><!--logo-->
                     </div><!--col-md-3-->
                     
                     <div class="col-md-6">
-                        <div class="header_ad_banner">
+                 {{--        <div class="header_ad_banner">
                         <a  href="#"><img class="img-responsive" src="template/assets/img/img_ad.jpg" alt=""></a>
-                        </div>
+                        </div> --}}
                     </div><!--col-md-6-->
                     
                     <div class="col-md-3">
