@@ -41,8 +41,10 @@ class HomeController extends Controller
         }
         return view('guests.index',['featurePosts'=>$featurePosts,'newestPosts'=>$newestPosts,'cates'=>$cates]);
     }
-    public function getDetailPost($id)
+    public function getListPosts($cateSlug, $id)
     {
-        return view('guests.detail');
+       $cate = Category::findOrFail($id);
+       return view('guests.category',['cate'=>$cate]);
+       
     }
 }

@@ -17,7 +17,7 @@
                             <div class="item <?php if($count==1) echo 'active'; ?> feature_news_item">
                                 <div class="item_wrapper">
                                     <div class="item_img">
-                                        <img class="img-responsive" src="{{asset('upload/images/posts/')}}/{{getenvconf('BigImageWidth').'x'.getenvconf('BigImageHeight')}}/{{$featurePost->image}} " alt="Chania">
+                                        <img class="img-responsive" src="{{asset('upload/images/posts/')}}/{{getenvconf('BigImageWidth').'x'.getenvconf('BigImageHeight')}}/{{$featurePost->image}} " alt="{{$featurePost->title}}">
                                     </div> <!--item_img-->
                                     <div class="item_title_date">
                                         <div class="news_item_title">
@@ -99,7 +99,9 @@
                         <div class="row">
                         <?php
                         $posts= $cate->posts();
-                        $postFirst = $posts->select('image','title','description','slug','created_at')->where('status','=','active')->orderBy('created_at','DESC')->first();
+                        $postFirst = $posts->select('image','title','description','slug','created_at')
+                        ->where('status','=','active')
+                        ->orderBy('created_at','DESC')->first();
                        // echo $postFirst->title;
 
                        
@@ -119,8 +121,8 @@
                                                 <h2><a href="#">{{$postFirst->title}}</a></h2>
                                             </div><!--news_item_title-->
                                             <div class="item_meta"><a href="#">
-                                                                <?php \Carbon\Carbon::setLocale('vi');?>
-                    {!! \Carbon\Carbon::createFromTimeStamp(strtotime($postFirst->created_at))->diffForHumans() !!}
+                                               <?php \Carbon\Carbon::setLocale('vi');?>
+                                                {!! \Carbon\Carbon::createFromTimeStamp(strtotime($postFirst->created_at))->diffForHumans() !!}
                                             </a></div>
                                         </div><!--item_title_date-->
                                     </div><!--item_wrapper-->   
@@ -135,7 +137,8 @@
                             <div class="col-md-5">
                                 <div class="media_wrapper">
                                 <?php 
-                                     $posts = $posts->select('image','title','description','slug')->where('status','=','active')->orderBy('created_at','DESC')->limit(4)->offset(1)->get(); 
+                                     $posts = $posts->select('image','title','description','slug')
+                                     ->where('status','=','active')->orderBy('created_at','DESC')->limit(4)->offset(1)->get(); 
                                      $count=0;
                                 ?>
                                  @foreach($posts as $post)
@@ -245,7 +248,7 @@
                     </div><!--row-->    
                 </div><!--more_news_item-->  --}}
 
-                
+
             </div><!--col-md-9-->
 
             <div class="col-md-3">

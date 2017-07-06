@@ -40,7 +40,7 @@ class PostController extends Controller
       $post = new Post();
 
       $post->title= $request->txtTitle;
-      $post->slug = str_slug($request->txtName, "-");
+      $post->slug = str_slug($request->txtTitle, "-");
 
       $post->description = $request->txtDescription;
       $post->content = $request->txtContent;
@@ -93,11 +93,11 @@ class PostController extends Controller
     {
       $post = Post::findOrFail($id);
       $post->title= $request->txtTitle;
-      $post->slug = str_slug($request->txtName, "-");
+      $post->slug = str_slug($request->txtTitle, "-");
       $post->description = $request->txtDescription;
       $post->content = $request->txtContent;
       $post->cate_id = $request->sltCate;
-      $post->status = "pending";
+     
       $post->tags = $request->txtTags;
       $post->user_id = Auth::user()->id;
       $file = $request->file('fileImage');
@@ -348,21 +348,25 @@ class PostController extends Controller
     ->get();
     return json_encode($post);
   }
-  public function getListPostWithCateAjax( $max, $page,Request $request)
+  public function getListPostsWithCateAjax( $max, $page,Request $request)
   {
     $numberRecord= $max;
     $vitri =($page -1 ) * $numberRecord;
-    $orderBy = $request->orderby;
+   // $orderBy = $request->orderby;
     $cateId = $request->cateid;
-    $posts = Post::select('name','view','downloaded','title','image','version','description','tags','publisher_name','publisher_url','slug','id')
+    $posts = Post::select('title','view','image','description','tags','created_at','slug','id')
       ->where('status','=','active')
       ->where('cate_id','=',$cateId)
-      ->orderBy($orderBy,'DESC')
+      ->orderBy('created_at','DESC')
       ->limit($numberRecord)
       ->offset($vitri)
       ->get();
       return json_encode(['posts'=>$posts,'total'=>Post::where('status','=','active')
       ->where('cate_id','=',$cateId)->count()]);
+  }
+  public function getListPosts($value='')
+  {
+    # code...
   }
 
 }
