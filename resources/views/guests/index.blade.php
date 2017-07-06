@@ -99,8 +99,8 @@
                         <div class="row">
                         <?php
                         $posts= $cate->posts();
-                        $postFirst = $posts->select('image','title','description','slug')->first();
-                        //echo $postFirst->title;
+                        $postFirst = $posts->select('image','title','description','slug','created_at')->where('status','=','active')->orderBy('created_at','DESC')->first();
+                       // echo $postFirst->title;
 
                        
                         ?>
@@ -108,48 +108,53 @@
                            
                             <div class="col-md-7">
                             
+                            @if($postFirst!=null)
                                 <div class="item feature_news_item">
                                     <div class="item_wrapper">
                                         <div class="item_img">
-                                            <img class="img-responsive" src="assets/img/img_feature_news.jpg" alt="Chania">
+                                            <img class="img-responsive" src="{{asset('upload/images/posts/')}}/{{getenvconf('BigImageWidth').'x'.getenvconf('BigImageHeight')}}/{{$postFirst->image}}" alt="Chania">
                                         </div><!--item_img--> 
                                         <div class="item_title_date">
                                             <div class="news_item_title">
-                                                <h2><a href="#"></a></h2>
+                                                <h2><a href="#">{{$postFirst->title}}</a></h2>
                                             </div><!--news_item_title-->
-                                            <div class="item_meta"><a href="#">20Aug- 2015,</a> by:<a href="#">Jhonson</a></div>
+                                            <div class="item_meta"><a href="#">
+                                                                <?php \Carbon\Carbon::setLocale('vi');?>
+                    {!! \Carbon\Carbon::createFromTimeStamp(strtotime($postFirst->created_at))->diffForHumans() !!}
+                                            </a></div>
                                         </div><!--item_title_date-->
                                     </div><!--item_wrapper-->   
-                                    <div class="item_content">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
+                                    <div class="item_content">
+                                    {{str_limit($postFirst->description, 100)}}
                                     </div><!--item_content-->
 
                                 </div><!--feature_news_item-->
-                          
+                            @endif
                             </div><!--col-md-7-->
                             
                             <div class="col-md-5">
                                 <div class="media_wrapper">
                                 <?php 
-                                     $posts = $posts->select('image','title','description','slug')->orderBy('created_at','DESC')->limit(5)->offset(1)->get(); 
+                                     $posts = $posts->select('image','title','description','slug')->where('status','=','active')->orderBy('created_at','DESC')->limit(4)->offset(1)->get(); 
                                      $count=0;
                                 ?>
                                  @foreach($posts as $post)
 
-                                    <?php $count++;?>
-                                    @if($count!=1)
+                               
+                        
                                     <div class="media">
                                         <div class="media-left">
-                                            <a href="#"><img class="media-object" src="assets/img/img-list.jpg" alt="Generic placeholder image"></a>
+                                            <a href="#"><img class="media-object" src="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$post->image}}" alt="Generic placeholder image"></a>
                                         </div><!--media-left-->
                                         <div class="media-body">
-                                            <h3 class="media-heading"><a href="#">{{$post->title}}
+                                            <h3 class="media-heading"><a href="#">{{str_limit($post->title,70)}}
                                             </a></h3>
 
-                                            <p>Sed perspiciatis unde omnis iste natus voluptatem.</p>
+                                            <p>{{str_limit($post->description,55)}}</p>
 
                                         </div><!--media-body-->
                                     </div><!--media-->
-                                    @endif
+                               
                                 @endforeach
                              
                                     
@@ -169,165 +174,8 @@
 
 
 
-                <div class="category_layout">
-                    <div class="item_caregory blue"><h2><a href="#">Hockey</a></h2></div>
-                    <div class="row">
-                        <div class="col-md-7">
-                            <div class="item active feature_news_item">
-                                <div class="item_wrapper">
-                                    <div class="item_img">
-                                        <img class="img-responsive" src="assets/img/img-hockey.jpg" alt="Chania">
-                                    </div><!--item_img-->  
-                                    <div class="item_title_date">
-                                        <div class="news_item_title">
-                                            <h2><a href="#">Argentia ahead two step playing hockey tournament</a></h2>
-                                        </div><!--news_item_title-->
-                                        <div class="item_meta"><a href="#">20Aug- 2015,</a> by:<a href="#">Jhonson</a></div>
-                                    </div><!--item_title_date-->
-                                </div><!--item_wrapper-->   
-                                <div class="item_content">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
-                                </div>
 
-                            </div><!--feature_news_item-->
-                        </div><!--col-md-7-->
-                        
-                        <div class="col-md-5">
-                            <div class="media_wrapper">
-                                <div class="media">
-                                    <div class="media-left">
-                                        <a href="#"><img class="media-object" src="assets/img/img-list5.jpg" alt="Generic placeholder image"></a>
-                                    </div><!--media-left-->
-                                    <div class="media-body">
-                                        <h3 class="media-heading"><a href="#">Machester United start the player
-                                        </a></h3>
 
-                                        <p>Sed perspiciatis unde omnis iste natus voluptatem.</p>
-
-                                    </div><!--media-body-->
-                                </div><!--media-->
-
-                                <div class="media">
-                                    <div class="media-left">
-                                        <a href="#"><img class="media-object" src="assets/img/img-list6.jpg" alt="Generic placeholder image"></a>
-                                    </div><!--media-left-->
-                                    <div class="media-body">
-                                        <h3 class="media-heading"><a href="#">Machester United start the player
-                                        </a></h3>
-
-                                        <p>Sed perspiciatis unde omnis iste natus voluptatem.</p>
-
-                                    </div><!--media-body-->
-                                </div><!--media-->
-
-                                <div class="media">
-                                    <div class="media-left">
-                                        <a href="#"><img class="media-object" src="assets/img/img-list7.jpg" alt="Generic placeholder image"></a>
-                                    </div><!--media-left-->
-                                    <div class="media-body">
-                                        <h3 class="media-heading"><a href="#">Machester United start the player
-                                        </a></h3>
-
-                                        <p>Sed perspiciatis unde omnis iste natus voluptatem.</p>
-
-                                    </div><!--media-body-->
-                                </div><!--media-->
-
-                                <div class="media">
-                                    <div class="media-left">
-                                        <a href="#"><img class="media-object" src="assets/img/img-list4.jpg" alt="Generic placeholder image"></a>
-                                    </div><!--media-left-->
-                                    <div class="media-body">
-                                        <h3 class="media-heading"><a href="#">Machester United start the player
-                                        </a></h3>
-
-                                        <p>Sed perspiciatis unde omnis iste natus voluptatem.</p>
-
-                                    </div><!--media-body-->
-                                </div><!--media-->
-                            </div><!--media_wrapper-->
-                        </div><!--col-md-5-->
-                    </div><!--row-->
-                </div><!--category_layout-->
-
-                <div class="category_layout">
-                    <div class="item_caregory teal"><h2><a href="#">Tennis</a></h2></div>
-                    <div class="row">
-                        <div class="col-md-7">
-                            <div class="item active feature_news_item">
-                                <div class="item_wrapper">
-                                    <div class="item_img">
-                                        <img class="img-responsive" src="assets/img/img_feature_news3.jpg" alt="Chania">
-                                    </div><!--item_img-->  
-                                    <div class="item_title_date">
-                                        <div class="news_item_title">
-                                            <h2><a href="#">Leo Messi is boss of the bosses of the football world.</a></h3>
-                                        </div><!--news_item_title-->
-                                        <div class="item_meta"><a href="#">20Aug- 2015,</a> by:<a href="#">Jhonson</a></div>
-                                    </div><!--item_title_date-->
-                                </div><!--item_wrapper-->   
-                                <div class="item_content">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
-                                </div>
-
-                            </div><!--feature_news_item-->
-                        </div><!--col-md-7-->
-                        
-                        <div class="col-md-5">
-                            <div class="media_wrapper">
-                                <div class="media">
-                                    <div class="media-left">
-                                        <a href="#"><img class="media-object" src="assets/img/img-list7.jpg" alt="Generic placeholder image"></a>
-                                    </div><!--media-left-->
-                                    <div class="media-body">
-                                        <h3 class="media-heading"><a href="#">Machester United start the player
-                                        </a></h3>
-
-                                        <p>Sed perspiciatis unde omnis iste natus voluptatem.</p>
-
-                                    </div><!--media-body-->
-                                </div><!--media-->
-
-                                <div class="media">
-                                    <div class="media-left">
-                                        <a href="#"><img class="media-object" src="assets/img/img-list8.jpg" alt="Generic placeholder image"></a>
-                                    </div><!--media-left-->
-                                    <div class="media-body">
-                                        <h3 class="media-heading"><a href="#">Machester United start the player
-                                        </a></h3>
-
-                                        <p>Sed perspiciatis unde omnis iste natus voluptatem.</p>
-
-                                    </div><!--media-body-->
-                                </div><!--media-->
-
-                                <div class="media">
-                                    <div class="media-left">
-                                        <a href="#"><img class="media-object" src="assets/img/img-list9.jpg" alt="Generic placeholder image"></a>
-                                    </div><!--media-left-->
-                                    <div class="media-body">
-                                        <h3 class="media-heading"><a href="#">Machester United start the player
-                                        </a></h3>
-
-                                        <p>Sed perspiciatis unde omnis iste natus voluptatem.</p>
-
-                                    </div><!--media-body-->
-                                </div><!--media-->
-
-                                <div class="media">
-                                    <div class="media-left">
-                                        <a href="#"><img class="media-object" src="assets/img/img-list4.jpg" alt="Generic placeholder image"></a>
-                                    </div><!--media-left-->
-                                    <div class="media-body">
-                                        <h3 class="media-heading"><a href="#">Machester United start the player
-                                        </a></h3>
-
-                                        <p>Sed perspiciatis unde omnis iste natus voluptatem.</p>
-
-                                    </div><!--media-body-->
-                                </div><!--media-->
-                            </div><!--media_wrapper-->
-                        </div><!--col-md-5-->
-                    </div><!--row-->
-                </div><!--category_layout-->
                 
                 <div id="more_news_item" class="more_news_item">
                     <div class="more_news_heading"><h2><a href="#">More News</a></h2></div>

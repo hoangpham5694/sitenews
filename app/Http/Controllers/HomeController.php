@@ -15,8 +15,8 @@ class HomeController extends Controller
     }
     public function getIndex()
     {
-        $featurePosts = Post::select('title','slug','description','image')->where('featured_at','!=',null)->where('status','=','active')->limit(4)->orderBy('featured_at','DESC')->get();
-        $newestPosts =Post::select('title','slug','description','image')->where('status','=','active')->limit(2)->orderBy('created_at','DESC')->get();
+        $featurePosts = Post::select('title','slug','description','image','created_at')->where('featured_at','!=',null)->where('status','=','active')->limit(4)->orderBy('featured_at','DESC')->get();
+        $newestPosts =Post::select('title','slug','description','image','created_at')->where('status','=','active')->limit(2)->orderBy('created_at','DESC')->get();
         // $posts = Post::select('title')->with(array('category'=>function($query){
         //     $query->select('name');
         // }))
