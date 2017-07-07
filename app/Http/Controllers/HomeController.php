@@ -15,8 +15,15 @@ class HomeController extends Controller
     }
     public function getIndex()
     {
-        $featurePosts = Post::select('title','slug','description','image','created_at')->where('featured_at','!=',null)->where('status','=','active')->limit(4)->orderBy('featured_at','DESC')->get();
-        $newestPosts =Post::select('title','slug','description','image','created_at')->where('status','=','active')->limit(2)->orderBy('created_at','DESC')->get();
+        $featurePosts = Post::join('categories','posts.cate_id','=','categories.id')
+        ->select('posts.title','posts.view','posts.image','posts.description','posts.tags','posts.created_at','posts.slug as post_slug','posts.id','categories.slug as cate_slug')
+        ->where('posts.featured_at','!=',null)
+        ->where('posts.status','=','active')->limit(4)->orderBy('featured_at','DESC')->get();
+        
+        $newestPosts =Post::join('categories','posts.cate_id','=','categories.id')
+        ->select('posts.title','posts.view','posts.image','posts.description','posts.tags','posts.created_at','posts.slug as post_slug','posts.id','categories.slug as cate_slug')
+        ->where('status','=','active')
+        ->limit(2)->orderBy('created_at','DESC')->get();
         // $posts = Post::select('title')->with(array('category'=>function($query){
         //     $query->select('name');
         // }))
@@ -49,12 +56,23 @@ class HomeController extends Controller
     }
     public function getDetailPost($cateSlug, $postSlug, $id)
     {
-           $post = Post::findOrFail($id);
-           $relatedPosts = Post::select('title','description','slug','image','created_at')->where('status','=','active')
-            ->where('created_at','<=',date("Y-m-d") )
-            ->where('created_at','>=',date('Y-m-d',strtotime("-15 days")))
+        $post = Post::findOrFail($id);
+        $relatedPosts = Post::join('categories','posts.cate_id','=','categories.id')
+      ->select('posts.title','posts.view','posts.image','posts.description','posts.tags','posts.created_at','posts.slug as post_slug','posts.id','categories.slug as cate_slug')
+            ->where('posts.created_at','<=',date("Y-m-d") )
+            ->where('posts.created_at','>=',date('Y-m-d',strtotime("-15 days")))
             ->inRandomOrder()
             ->limit(6)->get();
         return view('guests.detail',['post'=>$post,'relatedPosts'=>$relatedPosts,'cateSlug'=>$cateSlug]);
     }
+    public function getSearchPost(Request $request)
+    {
+        $keyword ="";
+        if($request->key != null){
+           // dd($request->key);
+            $keyword =$request->key;  
+        }
+        return view('guests.search',['keyword'=>$keyword]);
+    }
+
 }

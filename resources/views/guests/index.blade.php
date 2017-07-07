@@ -21,7 +21,7 @@
                                     </div> <!--item_img-->
                                     <div class="item_title_date">
                                         <div class="news_item_title">
-                                            <h2><a href="single.html">{{ str_limit($featurePost->title, 80)}}</a></h2>
+                                            <h2><a href="{{url('/')}}/{{$featurePost->cate_slug}}/{{$featurePost->post_slug}}.{{$featurePost->id}}.html">{{ str_limit($featurePost->title, 80)}}</a></h2>
                                         </div>
                                       
                                     </div> <!--item_title_date-->
@@ -62,7 +62,7 @@
                                         </div> <!--item_img-->
                                         <div class="item_title_date">
                                             <div class="news_item_title">
-                                                <h2><a href="single.html">{{str_limit($newestPost->title,30) }}</a></h2>
+                                                <h2><a href="{{url('/')}}/{{$newestPost->cate_slug}}/{{$newestPost->post_slug}}.{{$newestPost->id}}.html">{{str_limit($newestPost->title,30) }}</a></h2>
                                             </div>
                                           
                                         </div><!--item_title_date-->

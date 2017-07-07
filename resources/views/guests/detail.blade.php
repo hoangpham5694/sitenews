@@ -1,6 +1,6 @@
 @extends('guests.master')
-@section('header')
-
+@section('heading')
+<title> {!!$post->title!!}</title>
 @endsection
 @section('content')
 
@@ -19,7 +19,7 @@
                                 </div><!--news_item_title-->
                                 <div class="item_meta">
                                  <?php \Carbon\Carbon::setLocale('vi');?>
-                                 {!! \Carbon\Carbon::createFromTimeStamp(strtotime($post->created_at))->diffForHumans() !!}</div>
+                                 Thời gian: {!! \Carbon\Carbon::createFromTimeStamp(strtotime($post->created_at))->diffForHumans() !!}</div>
 
                                     <span class="rating">
                                         <i class="fa fa-star"></i>
@@ -68,14 +68,14 @@
                         @foreach($relatedPosts as $relatedPost)
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="#"><img class="media-object" src="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$relatedPost->image}} " alt="Generic placeholder image"></a>
+                                    <a href="{{url('/')}}/{{$relatedPost->cate_slug}}/{{$relatedPost->post_slug}}.{{$relatedPost->id}}.html"><img class="media-object" src="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$relatedPost->image}} " alt="{{$relatedPost->title}}"></a>
                                 </div><!--media-left-->
                                 <div class="media-body">
-                                    <h4 class="media-heading"><a href="#">{{str_limit($relatedPost->title, 150)}}
+                                    <h4 class="media-heading"><a href="{{url('/')}}/{{$relatedPost->cate_slug}}/{{$relatedPost->post_slug}}.{{$relatedPost->id}}.html">{{str_limit($relatedPost->title, 150)}}
                                     </a></h4>
                                     <div class="media_meta">
                                         <?php \Carbon\Carbon::setLocale('vi');?>
-                                        {!! \Carbon\Carbon::createFromTimeStamp(strtotime($relatedPost->created_at))->diffForHumans() !!}
+                                        Thời gian: {!! \Carbon\Carbon::createFromTimeStamp(strtotime($relatedPost->created_at))->diffForHumans() !!}
                                     </div>
                                     <div class="media_content"><p>{{str_limit($relatedPost->description, 190)}}</p>
                                     </div><!--media_content-->

@@ -364,9 +364,33 @@ class PostController extends Controller
       return json_encode(['posts'=>$posts,'total'=>Post::where('status','=','active')
       ->where('cate_id','=',$cateId)->count()]);
   }
-  public function getListPosts($value='')
+  public function getListPostsSearchAjax($max, $page,Request $request)
   {
-    # code...
+    $numberRecord= $max;
+    $vitri =($page -1 ) * $numberRecord;
+   // $orderBy = $request->orderby;
+    $keyword = $request->key;
+
+    $posts = Post::join('categories','posts.cate_id','=','categories.id')
+      ->select('posts.title','posts.view','posts.image','posts.description','posts.tags','posts.created_at','posts.slug as post_slug','posts.id','categories.slug as cate_slug')
+      ->where('status','=','active')
+      ->where(function($query) use ($keyword){
+            $query->where('posts.title','LIKE','%'.$keyword.'%')
+            ->orWhere('posts.description','LIKE','%'.$keyword.'%');
+      })
+      ->orderBy('created_at','DESC')
+      ->limit($numberRecord)
+      ->offset($vitri)
+      ->get();
+    $total = Post::join('categories','posts.cate_id','=','categories.id')
+      
+      ->where('status','=','active')
+      ->where(function($query) use ($keyword){
+           $query->where('posts.title','LIKE','%'.$keyword.'%')
+           ->orWhere('posts.description','LIKE','%'.$keyword.'%');
+      })
+      ->count();
+      return json_encode(['posts'=>$posts,'total'=>$total]);
   }
 
 }

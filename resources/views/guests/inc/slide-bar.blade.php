@@ -1,13 +1,22 @@
 <?php 
-    $lastestPosts = App\Post::select('title','description','slug','image','created_at')->where('status','=','active')->orderBy('created_at','DESC')->limit(5)->get();
-    $topViewPosts = App\Post::select('title','description','slug','image','created_at')->where('status','=','active')
-    ->where('created_at','<=',date("Y-m-d") )
-    ->where('created_at','>=',date('Y-m-d',strtotime("-7 days")))
-    ->orderBy('view','DESC')
+    $lastestPosts = App\Post::join('categories','categories.id','=','posts.cate_id')
+    ->select('posts.title','posts.description','posts.slug as post_slug','posts.image','posts.created_at','categories.slug as cate_slug','posts.id')
+    ->where('posts.status','=','active')
+    ->orderBy('posts.created_at','DESC')->limit(5)->get();
+    
+    $topViewPosts = App\Post::join('categories','categories.id','=','posts.cate_id')
+    ->select('posts.title','posts.description','posts.slug as post_slug','posts.image','posts.created_at','categories.slug as cate_slug','posts.id')
+    ->where('posts.status','=','active')
+    ->where('posts.created_at','<=',date("Y-m-d") )
+    ->where('posts.created_at','>=',date('Y-m-d',strtotime("-7 days")))
+    ->orderBy('posts.view','DESC')
     ->limit(5)->get();
-    $recommentPosts = App\Post::select('title','description','slug','image','created_at')->where('status','=','active')
-    ->where('created_at','<=',date("Y-m-d") )
-    ->where('created_at','>=',date('Y-m-d',strtotime("-7 days")))
+   
+   $recommentPosts = App\Post::join('categories','categories.id','=','posts.cate_id')
+    ->select('posts.title','posts.description','posts.slug as post_slug','posts.image','posts.created_at','categories.slug as cate_slug','posts.id')
+    ->where('posts.status','=','active')
+    ->where('posts.created_at','<=',date("Y-m-d") )
+    ->where('posts.created_at','>=',date('Y-m-d',strtotime("-7 days")))
     ->inRandomOrder()
     ->limit(8)->get();
   //  echo date('Y-m-d',strtotime("-7 days"));
@@ -24,10 +33,10 @@
                         @foreach($lastestPosts as $lastestPost)
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="#"><img class="media-object" src="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$lastestPost->image}}" alt="{{$lastestPost->title}}"></a>
+                                    <a href="{{url('/')}}/{{$lastestPost->cate_slug}}/{{$lastestPost->post_slug}}.{{$lastestPost->id}}.html"  ><img class="media-object" src="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$lastestPost->image}}" alt="{{$lastestPost->title}}"></a>
                                 </div><!--media-left-->
                                 <div class="media-body">
-                                    <h4 class="media-heading"><a href="#">{{str_limit($lastestPost->title,40)}}</a></h4>
+                                    <h4 class="media-heading"><a href="{{url('/')}}/{{$lastestPost->cate_slug}}/{{$lastestPost->post_slug}}.{{$lastestPost->id}}.html">{{str_limit($lastestPost->title,40)}}</a></h4>
                                     <span class="rating">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
@@ -48,10 +57,10 @@
                         @foreach($topViewPosts as $topViewPost)
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="#"><img class="media-object" src="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$topViewPost->image}}" alt="{{$topViewPost->title}}"></a>
+                                    <a href="{{url('/')}}/{{$topViewPost->cate_slug}}/{{$topViewPost->post_slug}}.{{$topViewPost->id}}.html"><img class="media-object" src="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$topViewPost->image}}" alt="{{$topViewPost->title}}"></a>
                                 </div><!--media-left-->
                                 <div class="media-body">
-                                    <h3 class="media-heading"><a href="#">{{str_limit($topViewPost->title,40)}}</a></h3>
+                                    <h3 class="media-heading"><a href="{{url('/')}}/{{$topViewPost->cate_slug}}/{{$topViewPost->post_slug}}.{{$topViewPost->id}}.html">{{str_limit($topViewPost->title,40)}}</a></h3>
                                     <span class="rating">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
@@ -90,10 +99,10 @@
                     @foreach($recommentPosts as $recommentPost)
                     <div class="media">
                         <div class="media-left">
-                            <a href="#"><img class="media-object" src="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$recommentPost->image}}" alt="Generic placeholder image"></a>
+                            <a href="{{url('/')}}/{{$recommentPost->cate_slug}}/{{$recommentPost->post_slug}}.{{$recommentPost->id}}.html"><img class="media-object" src="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$recommentPost->image}}" alt="Generic placeholder image"></a>
                         </div><!--media-left-->
                         <div class="media-body">
-                            <h3 class="media-heading"><a href="#">{{str_limit($recommentPost->title,37)}}</a></h3>
+                            <h3 class="media-heading"><a href="{{url('/')}}/{{$recommentPost->cate_slug}}/{{$recommentPost->post_slug}}.{{$recommentPost->id}}.html">{{str_limit($recommentPost->title,37)}}</a></h3>
                              <div class="comment_box">
                                 
                                  <div class="comments">

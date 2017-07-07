@@ -45,7 +45,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="top_ber_left">
-                            20 August. Thursday 2015. 2:00 PM.
+                        
                         </div><!--top_ber_left-->
                     </div><!--col-md-6-->
                     <div class="col-md-6">
@@ -65,7 +65,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="logo">
-                        <a  href="index.html"><img class="img-responsive" src="{{asset('template/assets/img/logo.png')}}" alt=""></a>
+                        <a  href="{{url('/')}}"><img class="img-responsive" src="{{asset('template/assets/img/logo.png')}}" alt=""></a>
                         </div><!--logo-->
                     </div><!--col-md-3-->
                     
@@ -106,7 +106,7 @@
                 <ul class="nav navbar-nav">
                     <li class="hidden"><a href="#page-top"></a></li>
                       @foreach(\App\Category::where("main", '1')->get() as $categorys)
-                    <li><a class="page-scroll" href="category.html">{{$categorys->name}}</a></li>
+                    <li><a class="page-scroll" href="{{url('danh-muc')}}/{{$categorys->slug}}.{{$categorys->id}}.html">{{$categorys->name}}</a></li>
                       @endforeach
                     
                   
@@ -115,7 +115,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Nhiều hơn <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         @foreach(\App\Category::where("main", '0')->get() as $categorys)
-                             <li><a href="#">{{$categorys->name}}</a></li>
+                             <li><a href="{{url('danh-muc')}}/{{$categorys->slug}}.{{$categorys->id}}.html">{{$categorys->name}}</a></li>
                         @endforeach
                            
 
@@ -123,9 +123,9 @@
                     </li>
                 </ul>
                 <div class="pull-right">
-                    <form class="navbar-form" role="search">
+                    <form class="navbar-form" role="search" method="GET" action="{{url('tim-kiem.html')}}" >
                         <div class="input-group">
-                            <input class="form-control" placeholder="Search" name="q" type="text">
+                            <input class="form-control" placeholder="Search" name="key" type="text">
                             <div class="input-group-btn">
                                 <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                             </div>

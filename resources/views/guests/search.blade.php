@@ -1,122 +1,66 @@
-@extends('guests.master-two-col')
+@extends('guests.master')
 @section('header')
 
 @endsection
 @section('content')
 
-<div class="list-options">
-                <span id="OrderBy">Tìm kiếm: {{$key}}</span>
-             
-</div>
-
-<div class="list-softs" >
-@foreach($softwares as $software)
-  <div class="item clearfix" >
-                <h2 class="title">
-                    <img src="{{asset('upload/images/32x32')}}/{{$software->image}}" alt="{{$software->name}}-{{$software->title}}">
-                    <a class="title" href="{{url('/')}}/{{$software->slug}}.{{$software->id}}.html"><b>{{$software->name}}</b></a> 
-                    <i>{{$software->title}}</i>
-                </h2>
-                <div class="item-info">
-                    <a class="item-image" href="{{url('/')}}/{{$software->name}}.{{$software->id}}.html">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" class="lazy" data-original="{{asset('upload/images/96x96')}}/{{$software->image}}" alt="{{$software->name}}-{{$software->title}}">
-                    </a>
-
-                    <div class="publisher-info">
-                        <ul>
-                            <li class="publisher-info">
-                                <span class="item-label">Phát hành:</span>
-                                <a class="item-info" href="{{$software->publisher_url}}">
-                                    {{$software->publisher_name}}
-                                </a>
-                            </li>
-                            <li class="clearfix"></li>
-                        <li class="brief-info">
-                               {{$software->description}}
-                        </li>
-                        </ul>
+    <section id="feature_category_section" class="feature_category_section single-page section_wrapper">
+    <div class="container">   
+        <div class="row">
+             <div class="col-md-9">
+                <div class="single_content_layout" ng-controller="PostController">
+                    <div class="heading">
+                        <h2>Tìm kiếm: {{$keyword}}</h2>
                     </div>
-                    <div class="list-item-plus">
-                        <ul class="specs-info">
-                        <li class="download-info">
-                            <a href="{{url('/download')}}/{{$software->slug}}.{{$software->id}}.html" class="download-button">
-                                <span>Tải về</span>
-                            </a>
-                        </li>
+                    <div class="list-posts" data-ng-init="getListPostsSearch(1,'{{$keyword}}');"  >
+                            <div class="media" ng-repeat="post in listPostsSearch">
+                                <div class=" media-left">
+                                    <a ng-href="{{asset('/')}}{%post.cate_slug%}/{%post.post_slug%}.{%post.id%}.html"><img class="media-object" ng-src="{{asset('upload/images/posts/')}}/{{getenvconf('SmallImageWidth').'x'.getenvconf('SmallImageHeight')}}/{%post.image%} " alt="{%post.title%}"></a>
+                                </div><!--media-left-->
+                               
+                                <div class=" media-right">
+                                    <h3 class="media-heading"><a ng-href="{{asset('/')}}{%post.cate_slug%}/{%post.post_slug%}.{%post.id%}.html"> <span ng-bind="post.title"></span></a></h3>
+                                    <div class="media_meta"><p ng-bind=" post.created_at | dateFilter | date:'dd-MM-yyyy' "></p></div>
+                                    <div class="media_content"><p ng-bind="post.description"></p>
+                                    </div><!--media_content-->
+                                </div>
+                                <div class="clearfix"></div>
+                                    
+                                   
+                          
+                            </div><!--media-->
 
-                    </ul>
-                </div>
-
-
-                    <div class="clearfix">
                     </div>
-                    <ul class="specs-info">
-
-                        <li class="downloads-info">
-                            <span class="item-label">Lượt tải:</span>
-                            <span class="item-info">{{$software->downloaded}}</span>
-                        </li>
-
-                        <li class="version-info">
-                      
-   <span class="item-label">Version:</span>
-                                <span class="item-info">   {{$software->version}}</span>
-                        </li>
-
-
-                            <li class="filesize-info">
-                                <span class="item-label">Dung lượng:</span>
-                                <span class="item-info">  {{$software->size}}</span>
-                            </li>
-
-                            <li class="requirements-info">
-                                <span class="item-label">Yêu cầu:</span>
-                                <span class="item-info">{{$software->system_require}}</span>
-                            </li>
-                            @if($software->tags != "")
-                                                            <li class="tags" >
-                                <span class="item-label">Tìm thêm:</span>
-                                <span class="item-info">
-                                <?php 
-                                    $tags =  explode(',',$software->tags);
-                                ?>
-                                @foreach($tags as $tag)
-                                    <a   href="{{url('/tim-kiem.html')}}?key={{$tag}}"> {{$tag}} </a>
-                                @endforeach
-                                <!--     <a ng-repeat="n in [1,software.tags.split(',').length] | makeRange"  href="">  {% software.tags.split(',')[n]%}</a>
-                                -->
-                                </span>
-                            </li>
-                            @endif
-
-                    </ul>
-                </div>
-    
-            </div>
-
-@endforeach
-
-          
-
-</div>
 
 <div class="pagination-container">
-<?php 
-  //  $totalPages = $total/
-//echo $total;
-?>
-   <a type="button" ng-repeat="n in [1,{{$total}}] | makeRange" ng-href="{{url('tim-kiem.html')}}?key={{$key}}&system={{$system}}&page={%n%}"  class="btn btn-default" ng-disabled="{{$page}} == n">{% n %}</a>
+
+   <button type="button" ng-repeat="n in [1,totalPostsSearch] | makeRange" ng-click="getListPostsSearch(n,'{{$keyword}}')"  class="btn btn-default" ng-disabled="pageListPostsSearch == n"><span ng-bind="n"></span></button>
 
 
 </div>
 
 
+                             
+                </div><!--single_content_layout-->
+             </div>
 
+            <div class="col-md-3">
+                   @include('guests.inc.slide-bar')
+            </div>
+        </div>      
+</section><!--feature_category_section-->
+
+
+
+
+        
+</section><!--feature_category_section-->
 @endsection
 @section('footer')
+ <script src="{{asset('app/lib/angular.min.js')}}"></script> 
+  <script src="{{asset('app/app.js')}}"></script> 
+ <script src="{{asset('app/controller/guests/PostController.js')}}"></script> 
 <script>
-    var timeout = setTimeout(function() {
-                $("img.lazy").lazyload();
-            }, 200);
+    
 </script>
 @endsection

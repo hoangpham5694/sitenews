@@ -16,11 +16,13 @@ Route::get('danh-muc/{cateslug}.{cateid}.html',['uses'=>'HomeController@getListP
 
 Route::get('{cateslug}/{slug}.{id}.html',['uses'=>'HomeController@getDetailPost']);
 
+
 Route::get('tim-kiem.html',['uses'=>'HomeController@getSearchPost']);
 Route::group(['prefix' => 'api'], function(){
 	
 	Route::group(['prefix' => 'post'], function(){
 		Route::get('list-posts/{max}/{page}',['uses'=>'PostController@getListPostsWithCateAjax']);
+    Route::get('search-posts/{max}/{page}',['uses'=>'PostController@getListPostsSearchAjax']);
 	});
 	
 
