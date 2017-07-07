@@ -15,7 +15,7 @@
                     <div class="list-posts" data-ng-init="getListPostsWithCate(1,{{$cate->id}});"  >
                             <div class="media" ng-repeat="post in listPostWithCate">
                                 <div class=" media-left">
-                                    <a href="#"><img class="media-object" ng-src="{{asset('upload/images/posts/')}}/{{getenvconf('SmallImageWidth').'x'.getenvconf('SmallImageHeight')}}/{%post.image%} " alt="Generic placeholder image"></a>
+                                    <a href="{{asset('/')}}{{$cate->slug}}/{%post.slug%}.{%post.id%}.html"><img class="media-object" ng-src="{{asset('upload/images/posts/')}}/{{getenvconf('SmallImageWidth').'x'.getenvconf('SmallImageHeight')}}/{%post.image%} " alt="Generic placeholder image"></a>
                                 </div><!--media-left-->
                                
                                 <div class=" media-right">
@@ -32,7 +32,12 @@
 
                     </div>
 
+<div class="pagination-container">
 
+   <button type="button" ng-repeat="n in [1,totalPostWithCate] | makeRange" ng-click="getListPostsWithCate(n,{{$cate->id}})"  class="btn btn-default" ng-disabled="pageListSoftwaresWithCate == n">{% n %}</button>
+
+
+</div>
 
 
                              

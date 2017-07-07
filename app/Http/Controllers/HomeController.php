@@ -47,4 +47,14 @@ class HomeController extends Controller
        return view('guests.category',['cate'=>$cate]);
        
     }
+    public function getDetailPost($cateSlug, $postSlug, $id)
+    {
+           $post = Post::findOrFail($id);
+           $relatedPosts = Post::select('title','description','slug','image','created_at')->where('status','=','active')
+            ->where('created_at','<=',date("Y-m-d") )
+            ->where('created_at','>=',date('Y-m-d',strtotime("-15 days")))
+            ->inRandomOrder()
+            ->limit(6)->get();
+        return view('guests.detail',['post'=>$post,'relatedPosts'=>$relatedPosts,'cateSlug'=>$cateSlug]);
+    }
 }
