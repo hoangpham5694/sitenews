@@ -10,6 +10,12 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('{type}.xml', 'RssController@index');
+
+Route::get('fbinstant.rss', 'RssController@fbinstant');
+
+Route::get('{type}.json', 'RssController@json');
+
 
 Route::get('/', ['uses'=>'HomeController@getIndex']);
 Route::get('danh-muc/{cateslug}.{cateid}.html',['uses'=>'HomeController@getListPosts']);
