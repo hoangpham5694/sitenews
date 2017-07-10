@@ -1,6 +1,6 @@
 @extends('guests.master')
 @section('heading')
-<title>Kênh giải trí tuổi teen - blogtuoihoctro.com</title>
+<title>Kênh giải trí tuổi teen - {{getenvconf('SiteDomain')}}</title>
 @endsection
 @section('content')
     <section id="feature_news_section" class="feature_news_section section_wrapper">
@@ -95,7 +95,7 @@
 
             @foreach($cates as $cate)
                 <div class="category_layout">
-                    <div class="item_caregory red"><h2><a href="category.html">{{$cate->name}}</a></h2></div>
+                    <div class="item_caregory red"><h2><a href="{{url('danh-muc')}}/{{$cate->slug}}.{{$cate->id}}.html">{{$cate->name}}</a></h2></div>
                         <div class="row">
                         <?php
                         $posts= $cate->posts();

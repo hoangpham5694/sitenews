@@ -1,6 +1,6 @@
 @extends('guests.master')
-@section('header')
-
+@section('heading')
+<title>{{$cate->description}} - &nbsp{{getenvconf('SiteDomain')}}</title>
 @endsection
 @section('content')
 

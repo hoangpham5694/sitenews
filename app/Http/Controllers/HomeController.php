@@ -56,9 +56,11 @@ class HomeController extends Controller
     }
     public function getDetailPost($cateSlug, $postSlug, $id)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::join('categories','posts.cate_id','=','categories.id')
+      ->select('posts.title','posts.content','posts.view','posts.image','posts.description','posts.tags','posts.created_at','posts.updated_at','posts.slug as post_slug','posts.id','categories.slug as cate_slug','categories.name as cate_name','categories.id as cate_id')
+      ->findOrFail($id);
         $relatedPosts = Post::join('categories','posts.cate_id','=','categories.id')
-      ->select('posts.title','posts.view','posts.image','posts.description','posts.tags','posts.created_at','posts.slug as post_slug','posts.id','categories.slug as cate_slug')
+      ->select('posts.title','posts.view','posts.image','posts.description','posts.tags','posts.created_at','posts.updated_at','posts.slug as post_slug','posts.id','categories.slug as cate_slug')
             ->where('posts.created_at','<=',date("Y-m-d") )
             ->where('posts.created_at','>=',date('Y-m-d',strtotime("-15 days")))
             ->inRandomOrder()

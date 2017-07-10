@@ -48,7 +48,7 @@ app.controller('CateController', function($scope, $http, API,$timeout){
 			return false;
 		}
 	}
-	$scope.modal = function(state,id,name){
+	$scope.modal = function(state,id,name,description){
 		//console.log(state);
 		$("#modalAdd").modal("show");
 		$scope.state = state;
@@ -62,7 +62,7 @@ app.controller('CateController', function($scope, $http, API,$timeout){
 				$scope.modalTitle = "Sửa danh mục " + id;
 				$scope.cateId= id;
 				$scope.cateName = name;
-
+				$scope.cateDescription = description;
 			break;
 		}
 		 
@@ -72,10 +72,10 @@ app.controller('CateController', function($scope, $http, API,$timeout){
 	$scope.confirm = function(state){
 		switch(state){
 			case 'add':
-				var url= API + 'adminsites/category/ajax/add?catename='+ $scope.cateName;
+				var url= API + 'adminsites/category/ajax/add?catename='+ $scope.cateName+'&catedes'+ $scope.cateDescription;
 			break;
 			case 'edit':
-				var url= API + 'adminsites/category/ajax/edit?cateid='+ $scope.cateId+'&catename='+$scope.cateName;
+				var url= API + 'adminsites/category/ajax/edit?cateid='+ $scope.cateId+'&catename='+$scope.cateName+'&catedes='+ $scope.cateDescription;
 			break;
 
 		}

@@ -1,6 +1,6 @@
 @extends('guests.master')
-@section('header')
-
+@section('heading')
+<title>Tìm kiếm: {{$keyword}}&nbsp - &nbsp{{getenvconf('SiteDomain')}}</title>
 @endsection
 @section('content')
 

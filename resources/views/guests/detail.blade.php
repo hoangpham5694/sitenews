@@ -1,6 +1,91 @@
 @extends('guests.master')
 @section('heading')
-<title> {!!$post->title!!}</title>
+<title> {!!$post->title!!}&nbsp - &nbsp{{getenvconf('SiteDomain')}}</title>
+<meta id="metaDescription" name="description" content="{{$post->description}}" />
+<meta id="metaKeywords" name="keywords" content="{{$post->title}}" />
+<meta name="author" content="{{getenvconf('SiteDomain')}}" />
+
+
+<meta name="googlebot" content="noarchive" />
+<meta name="robots" content="noarchive" />
+<!-- GOOGLE SEARCH STRUCTURED DATA FOR ARTICLE -->
+<script type="application/ld+json">
+{
+"@context": "http://schema.org",
+"@type": "NewsArticle",
+"mainEntityOfPage":{
+"@type":"WebPage",
+"@id":"{{url('/')}}/{{$post->cate_slug}}/{{$post->post_slug}}.{{$post->id}}.html"
+},
+"headline": "{{$post->title}}",
+"description": "{{$post->description}}",
+"image": {
+"@type": "ImageObject",
+"url": "{{asset('upload/images/posts/')}}/{{getenvconf('HorizontalImageWidth').'x'.getenvconf('HorizontalImageHeight')}}/{{$post->image}}",
+"width" : {{getenvconf('HorizontalImageWidth')}},
+"height" : {{getenvconf('HorizontalImageHeight')}}
+},
+"datePublished": "{!! \Carbon\Carbon::createFromTimeStamp(strtotime($post->created_at))->toW3cString() !!}",
+"dateModified": "{!! \Carbon\Carbon::createFromTimeStamp(strtotime($post->updated_at))->toW3cString() !!}",
+"author": {
+"@type": "Person",
+"name": ""
+},
+"publisher": {
+"@type": "Organization",
+"name": "{{getenvconf('SiteDomain')}}",
+"logo": {
+"@type": "ImageObject",
+"url": "http://stc.v3.news.zing.vn/wap/css/img/logo_zing_black@2x.png",
+"width": 300,
+"height": 100
+}
+}
+}
+</script>
+<!-- GOOGLE BREADCRUMB STRUCTURED DATA -->
+<script type="application/ld+json">
+{
+"@context": "http://schema.org",
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"item": {
+"@id": "http://getenvconf('SiteDomain')",
+"name": "Trang chủ"
+}
+},{
+"@type": "ListItem",
+"position": 2,
+"item": {
+"@id": "/danh-muc/{{$post->cate_slug}}.{{$post->cate_id}}.html",
+"name": "{{$post->cate_name}}"
+}
+}
+]
+}
+</script>
+<!-- FACEBOOK OPEN GRAPH -->
+<meta property="fb:app_id" content="1892596964352709" />
+<meta property="og:site_name" content="{{getenvconf('SiteDomain')}}" />
+<meta property="og:rich_attachment" content="true" />
+<meta property="article:publisher" content="https://www.facebook.com/{{getenvconf('SiteDomain')}}" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="{{url('/')}}/{{$post->cate_slug}}/{{$post->post_slug}}.{{$post->id}}.html" />
+<meta property="og:title" content="{{$post->title}}" />
+<meta property="og:description" content="{{$post->description}}" />
+<meta property="og:image:url" content="{{asset('upload/images/posts/')}}/{{getenvconf('HorizontalImageWidth').'x'.getenvconf('HorizontalImageHeight')}}/{{$post->image}}" />
+<meta property="og:image:width" content="{{getenvconf('HorizontalImageWidth')}}" />
+<meta property="og:image:height" content="{{getenvconf('HorizontalImageHeight')}}" />
+<meta property="article:published_time" content="{{$post->created_at}}" />
+<meta property="article:modified_time" content="{{$post->updated_at}}" />
+<meta property="article:section" content="Phân tích" />
+  <?php $arrTags = explode(",",$post->tags); ?>
+@foreach($arrTags as $tag)
+    <meta property="article:tag" content="{{$tag}}"/>
+@endforeach
 @endsection
 @section('content')
 
@@ -44,7 +129,7 @@
                                       {!!$post->content!!}
                                     </div><!--item_content-->
                                     <div class="category_list">
-                                        <?php $arrTags = explode(",",$post->tags); ?>
+                                      
                                             @foreach($arrTags as $tag)
                                                
                                                 <a href="#">{{$tag}}</a>

@@ -57,6 +57,7 @@ class PostController extends Controller
             $this->makeimagedir($destinationPath.'/'.getenvconf('SmallImageWidth').'x'.getenvconf('SmallImageHeight').'/');
             $this->makeimagedir($destinationPath.'/'.getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight').'/');
             $this->makeimagedir($destinationPath.'/'.getenvconf('VerticalImageWidth').'x'.getenvconf('VerticalImageHeight').'/');
+            $this->makeimagedir($destinationPath.'/'.getenvconf('HorizontalImageWidth').'x'.getenvconf('HorizontalImageHeight').'/');
             $img = Image::make($file);
             
          //   $img = Image::make($destinationPath.'/'.$filename);
@@ -75,6 +76,10 @@ class PostController extends Controller
             $img = Image::make($file);
             $img->fit(getenvconf('VerticalImageWidth'), getenvconf('VerticalImageHeight'));
             $img->save($destinationPath.'/'.getenvconf('VerticalImageWidth').'x'.getenvconf('VerticalImageHeight').'/'.$filename);
+            $img = Image::make($file);
+            $img->fit(getenvconf('HorizontalImageWidth'), getenvconf('HorizontalImageHeight'));
+            $img->save($destinationPath.'/'.getenvconf('HorizontalImageWidth').'x'.getenvconf('HorizontalImageHeight').'/'.$filename);
+
             $post->image= $filename;
             $file->move($destinationPath,$filename);
         }
@@ -109,6 +114,7 @@ class PostController extends Controller
         $this->makeimagedir($destinationPath.'/'.getenvconf('SmallImageWidth').'x'.getenvconf('SmallImageHeight').'/');
         $this->makeimagedir($destinationPath.'/'.getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight').'/');
         $this->makeimagedir($destinationPath.'/'.getenvconf('VerticalImageWidth').'x'.getenvconf('VerticalImageHeight').'/');
+        $this->makeimagedir($destinationPath.'/'.getenvconf('HorizontalImageWidth').'x'.getenvconf('HorizontalImageHeight').'/');
         $img = Image::make($file);
         
       //   $img = Image::make($destinationPath.'/'.$filename);
@@ -127,6 +133,10 @@ class PostController extends Controller
         $img = Image::make($file);
         $img->fit(getenvconf('VerticalImageWidth'), getenvconf('VerticalImageHeight'));
         $img->save($destinationPath.'/'.getenvconf('VerticalImageWidth').'x'.getenvconf('VerticalImageHeight').'/'.$filename);
+        $img = Image::make($file);
+        $img->fit(getenvconf('HorizontalImageWidth'), getenvconf('HorizontalImageHeight'));
+        $img->save($destinationPath.'/'.getenvconf('HorizontalImageWidth').'x'.getenvconf('HorizontalImageHeight').'/'.$filename);
+
         $post->image= $filename;
         $file->move($destinationPath,$filename);
         }

@@ -21,7 +21,7 @@ class CategoryController extends Controller
       //  dd($numberRecord);
         $vitri =($page -1 ) * $numberRecord;
     	$cates = Category::leftJoin('posts','posts.cate_id','=','categories.id')
-    	->select('categories.id','categories.name','categories.slug',DB::raw('count(posts.id) as count_posts'))
+    	->select('categories.id','categories.name','categories.slug','categories.description',DB::raw('count(posts.id) as count_posts'))
     //	->where('agencies.status','=','active')
     //	->where('courses.status','!=','delete')
     	->groupBy('categories.id')
@@ -37,6 +37,7 @@ class CategoryController extends Controller
     {
     	$cate = new Category();
     	$cate->name = $request->catename;
+        $cate->description = $request->catedes;
         $cate->slug =str_slug($request->catename, "-");
         if(Category::where('slug','=',$cate->slug)->count()>0){
             return "Danh mục đã tồn tại";
@@ -48,6 +49,7 @@ class CategoryController extends Controller
     {
     	$cate = Category::findOrFail($request->cateid);
     	$cate->name = $request->catename;
+        $cate->description = $request->catedes;
         $cate->slug =str_slug($request->catename, "-");
     	$cate->save();
     	return "Sửa danh mục thành công";

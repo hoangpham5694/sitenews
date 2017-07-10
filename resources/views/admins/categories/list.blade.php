@@ -11,6 +11,7 @@
                                     <tr>
                                         <th>Mã</th>
                                         <th>Tên</th>
+                                        <th>Mô tả</th>
                                         <th>Số lượng bài</th>
 
                                         <th></th>
@@ -20,6 +21,7 @@
                                 	<tr ng-repeat="category in categories">
                                 		<td>{% category.id %}</td>
                                 		<td>{% category.name %}</td>
+                                    <td>{% category.description %}</td>
                                 		<td>{% category.count_posts %}</td>
                                 		
                                 		<td>
@@ -55,7 +57,13 @@
   <div class="form-group">
     <label for="inputmonth" class="col-sm-3 control-label">Tên danh mục:</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" ng-model="cateName" id="inputmonth" placeholder="Nhập tên nhóm">
+      <input type="text" class="form-control" ng-model="cateName" id="cateName" placeholder="Nhập tên nhóm">
+    </div>
+  </div>
+ <div class="form-group">
+    <label for="inputmonth" class="col-sm-3 control-label">Mô tả:</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" ng-model="cateDescription" id="cateDescription" placeholder="Nhập mô tả">
     </div>
   </div>
 
