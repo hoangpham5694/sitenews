@@ -18,6 +18,7 @@ class CategoryController extends Controller
     public function getCateListAjax(Request $request,$max, $page)
     {
     	$numberRecord= $max;
+      //  dd($numberRecord);
         $vitri =($page -1 ) * $numberRecord;
     	$cates = Category::leftJoin('posts','posts.cate_id','=','categories.id')
     	->select('categories.id','categories.name','categories.slug',DB::raw('count(posts.id) as count_posts'))

@@ -216,15 +216,15 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-3">
-                            Editor: Joshep guinter Grunt
+                           
                     </div><!--col-xs-3-->
                     <div class="col-md-6">
                         <div class="copyright">
-                        © Copyright 2015 - Sports News Mag.com. Design by: <a href="https://uiCookies.com" title="uiCookies">uiCookies</a>
+                        © Copyright 2017 - Blog Tuổi học trò.
                         </div>
                     </div><!--col-xs-6-->
                     <div class="col-md-3">
-                        Sports News Magazine
+                   
                     </div><!--col-xs-3-->
                 </div><!--row-->
             </div><!--container-->

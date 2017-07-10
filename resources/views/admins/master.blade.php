@@ -83,7 +83,7 @@
                             <a href="{!! url('adminsites/category/list') !!}">Quản lý danh mục</a>
                         </li>
                         <li>
-                            <a href="{!! url('adminsites/system/list') !!}">Quản lý hệ điều hành</a>
+                            <a href="{!! url('adminsites/systempost/list') !!}">Quản lý Bài viết hệ thống</a>
                         </li>
                          <li>
                             <a href="{!! url('adminsites/user/add') !!}">Thêm User</a>

@@ -55,7 +55,22 @@ Route::group(['middleware'=>'isroleadmin'], function(){
                 Route::get('delete/{id}',['uses'=>'CategoryController@getDeleteCateAjax']);
     		});
     	});
-
+      Route::group(['prefix' => 'systempost'], function(){
+        Route::get('list',['uses'=>'SystemPostController@getSystemPostLisAdmin']);
+        Route::get('add',['uses'=>'SystemPostController@getAddSystemPostAdmin']);
+        Route::post('add',['uses'=>'SystemPostController@postAddSystemPostAdmin']);
+        Route::get('edit/{id}',['uses'=>'SystemPostController@getEditSystemPostAdmin']);
+        Route::post('edit/{id}',['uses'=>'SystemPostController@postEditSystemPostAdmin']);
+        Route::get('detail/{id}',['uses'=>'SystemPostController@getDetailSystemPostAdmin']);
+        Route::group(['prefix' => 'ajax'], function(){
+            Route::get('list/{max}/{page}',['uses'=>'SystemPostController@getSystemPostListAjax']);
+            Route::get('total',['uses'=>'SystemPostController@getTotalSystemPostAjax']);
+            Route::get('setstatus/{softwareid}/{status}',['uses'=>'SystemSystemPostController@getSetStatusAjax']);
+            Route::get('delete/{id}',['uses'=>'SystemPostController@getDeleteSystemPostAjax']);
+            Route::get('make-feature/{id}',['uses'=>'SystemPostController@getMakeFeatureSystemPostAjax']);
+            Route::get('undo-feature/{id}',['uses'=>'SystemPostController@getUndoFeatureSystemPostAjax']);
+        });
+      });
         Route::group(['prefix' => 'user'], function(){
             Route::get('list',['uses'=>'UserController@getUserList']);
             Route::get('add',['uses'=>'UserController@getUserAdd']);
