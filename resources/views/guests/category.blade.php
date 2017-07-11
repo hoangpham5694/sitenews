@@ -1,6 +1,16 @@
 @extends('guests.master')
 @section('heading')
 <title>{{$cate->description}} - &nbsp{{getenvconf('SiteDomain')}}</title>
+<meta id="metaDes" name="description" content="{{$cate->description}}" />
+<meta id="metakeywords" name="keywords" />
+<meta id="newskeywords" name="news_keywords" />
+<link rel="canonical" href="{{asset('/')}}{{$cate->slug}}.{{$cate->id}}.html" />
+<meta name="robots" content="index,follow" />
+<meta name="revisit-after" content="1 days" />
+<meta property="og:type" content="article" />
+
+
+
 @endsection
 @section('content')
 

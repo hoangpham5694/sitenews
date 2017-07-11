@@ -28,13 +28,15 @@
   </head>
 <body>
 <div id="fb-root"></div>
-<script>(function(d, s, id) {
+<script>
+(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.9&appId=1892596964352709";
+  js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.9&appId=250027698816567";
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+}(document, 'script', 'facebook-jssdk'));
+</script>
 
 <div id="main-wrapper">
 
@@ -235,7 +237,7 @@
   
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{{asset('template/assets/js/jquery.min.js')}}"></script>
-
+<script src="<?php echo asset('template/js/jquery.lazyload.min.js') ; ?>"></script>
 <!-- Owl carousel -->
 <script src="{{asset('template/assets/js/owl.carousel.js')}}"></script>
 
@@ -249,7 +251,11 @@
 
 
 @yield('footer')
-
+<script>
+    $(document).ready(function(){
+        $("img.lazy").lazyload();
+    });
+</script>
    
 </body>
 </html>

@@ -1,6 +1,45 @@
 @extends('guests.master')
 @section('heading')
 <title>Kênh giải trí tuổi teen - {{getenvconf('SiteDomain')}}</title>
+<meta id="metaKeywords" name="keywords" content="Blog, Tin tức, Báo, Việt Nam, Hà Nội, Hồ Chí Minh, Đà Nẵng, Đời sống, Phóng sự, Pháp luật, Thế giới, Khám phá, Thị trường, Chứng khoán, Kinh tế, Bất động sản, Giáo dục, Tuyển sinh, Teen, Thể thao, Ngoại hạng, Champion, La liga, Công nghệ, điện thoại, Oto, Xe Máy, Giải trí, Showbiz, Sao Việt, Âm nhạc, VPOP, KPOP, Phim ảnh, Điện ảnh, Đẹp, Thời trang, Làm đẹp, Người Đẹp, Tình yêu, Du lịch, Ẩm thực, Sách, Cười" />
+<meta id="metaDescription" name="description" content="Cập nhật tin tức mới và nóng nhất về showbiz, đời sống giới trẻ, hot tên, hot face" />
+<meta name="author" content="{{getenvconf('SiteDomain')}}" />
+
+<!-- ROBOTS -->
+<meta name="googlebot" content="noarchive" />
+<meta name="robots" content="noarchive" />
+<!-- GENERAL GOOGLE SEARCH META -->
+<script type="application/ld+json">
+{
+"@context" : "http://schema.org",
+"@type" : "WebSite",
+"name" : "{{getenvconf('SiteDomain')}} - Kênh giải trí tuổi teen",
+"alternateName" : "Cập nhật tin tức mới và nóng nhất về showbiz, đời sống giới trẻ, hot tên, hot face",
+"url" : "http://{{getenvconf('SiteDomain')}}/"
+}
+</script>
+<!-- FACEBOOK OPEN GRAPH -->
+<meta property="fb:app_id" content="1892596964352709" />
+<meta property="og:site_name" content="{{getenvconf('SiteDomain')}}" />
+<meta property="og:rich_attachment" content="true" />
+<meta property="article:publisher" content="https://www.facebook.com/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="http://stc.v3.news.zing.vn/images/facebook_thumb.png" />
+<meta property="og:image:width" content="800" />
+<meta property="og:image:height" content="354" />
+<meta property="og:url" content="http://{{getenvconf('SiteDomain')}}" />
+<meta property="og:title" content="{{getenvconf('SiteNames')}}" />
+<meta http-equiv="REFRESH" content="1800" />
+<script type="text/javascript">
+zaConfig = {
+pageid: '1'
+}
+var cate_path = 'home';
+</script>
+
+
+
+
 @endsection
 @section('content')
     <section id="feature_news_section" class="feature_news_section section_wrapper">
@@ -58,7 +97,7 @@
                                 <div class="item active">
                                     <div class="item_wrapper">
                                         <div class="item_img">
-                                            <img class="img-responsive" src="{{asset('upload/images/posts/')}}/{{getenvconf('VerticalImageWidth').'x'.getenvconf('VerticalImageHeight')}}/{{$newestPost->image}}" alt="Chania">
+                                            <img class="img-responsive lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-original="{{asset('upload/images/posts/')}}/{{getenvconf('VerticalImageWidth').'x'.getenvconf('VerticalImageHeight')}}/{{$newestPost->image}}"" alt="{{$newestPost->title}}">
                                         </div> <!--item_img-->
                                         <div class="item_title_date">
                                             <div class="news_item_title">
@@ -114,7 +153,7 @@
                                 <div class="item feature_news_item">
                                     <div class="item_wrapper">
                                         <div class="item_img">
-                                            <img class="img-responsive" src="{{asset('upload/images/posts/')}}/{{getenvconf('BigImageWidth').'x'.getenvconf('BigImageHeight')}}/{{$postFirst->image}}" alt="Chania">
+                                            <img class="img-responsive lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-original="{{asset('upload/images/posts/')}}/{{getenvconf('BigImageWidth').'x'.getenvconf('BigImageHeight')}}/{{$postFirst->image}}"  alt="{{$postFirst->title}}">
                                         </div><!--item_img--> 
                                         <div class="item_title_date">
                                             <div class="news_item_title">
@@ -147,7 +186,7 @@
                         
                                     <div class="media">
                                         <div class="media-left">
-                                            <a href="{{url('/')}}/bai-viet/{{$post->post_slug}}.{{$post->id}}.html"><img class="media-object" src="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$post->image}}" alt="Generic placeholder image"></a>
+                                            <a href="{{url('/')}}/bai-viet/{{$post->post_slug}}.{{$post->id}}.html"><img class="media-object lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-original="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$post->image}}"  alt="{{$post->title}}"></a>
                                         </div><!--media-left-->
                                         <div class="media-body">
                                             <h3 class="media-heading"><a href="{{url('/')}}/bai-viet/{{$post->post_slug}}.{{$post->id}}.html">{{str_limit($post->title,70)}}

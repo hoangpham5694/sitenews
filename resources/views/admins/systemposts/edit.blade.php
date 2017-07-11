@@ -92,6 +92,9 @@
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 <script>
   var editor_config = {
+    forced_root_block : "", 
+    force_br_newlines : true,
+    force_p_newlines : false,
     path_absolute : "/",
     selector: "textarea#txtContent",
     plugins: [

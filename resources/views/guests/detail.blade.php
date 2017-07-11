@@ -68,7 +68,7 @@
 }
 </script>
 <!-- FACEBOOK OPEN GRAPH -->
-<meta property="fb:app_id" content="1892596964352709" />
+<meta property="fb:app_id" content="250027698816567" />
 <meta property="og:site_name" content="{{getenvconf('SiteDomain')}}" />
 <meta property="og:rich_attachment" content="true" />
 <meta property="article:publisher" content="https://www.facebook.com/{{getenvconf('SiteDomain')}}" />
@@ -82,7 +82,9 @@
 <meta property="article:published_time" content="{{$post->created_at}}" />
 <meta property="article:modified_time" content="{{$post->updated_at}}" />
 <meta property="article:section" content="Phân tích" />
-  <?php $arrTags = explode(",",$post->tags); ?>
+  <?php $arrTags = explode(",",$post->tags); 
+
+  ?>
 @foreach($arrTags as $tag)
     <meta property="article:tag" content="{{$tag}}"/>
 @endforeach
@@ -115,7 +117,13 @@
                                     </span>
 
                                     <div class="single_social_icon">
-                                        <a class="icons-sm fb-ic" href="#"><i class="fa fa-facebook"></i><span>Facebook</span></a>
+
+                                  <div class="fb-share-button" data-href="http://sitenews.dev/bai-viet/helly-tong-co-gai-hien-dai-chon-goc-song-an-yen.9.html#" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="http://sitenews.dev/bai-viet/helly-tong-co-gai-hien-dai-chon-goc-song-an-yen.9.html#&amp;src=sdkpreparse">Chia sẻ</a></div>
+                                      
+                                      <button  class="btn share-btn clearfix">Share kết quả lên tường</Button>
+
+
+                                      <a class="icons-sm fb-ic share-btn" ><i class="fa fa-facebook"></i><span>Facebook</span></a>
                                         <!--Twitter-->
                                         <a class="icons-sm tw-ic" href="#"><i class="fa fa-twitter"></i><span>Twitter</span></a>
                                         <!--Google +-->
@@ -129,11 +137,13 @@
                                       {!!$post->content!!}
                                     </div><!--item_content-->
                                     <div class="category_list">
-                                      
+
+                                    @if($post->tags !='')
                                             @foreach($arrTags as $tag)
-                                               
                                                 <a href="#">{{$tag}}</a>
                                             @endforeach
+                                    @endif
+                                           
                                        
                                        
                                     </div><!--category_list-->
@@ -141,7 +151,7 @@
                     </div><!--feature_news_item-->
                     
                     <div class="add_a_comment">
-                        <div class="single_media_title"><h2>Add a Comment</h2></div>
+                        <div class="single_media_title"><h2>Bình luận</h2></div>
                         <div class="comment_form">
                           <div class="fb-comments" data-href="{!! url('/') !!}/{!! $cateSlug; !!}/{!! $post->slug; !!}.{{$post->id}}.html" data-width="100%" data-numposts="5"></div>
                         </div><!--comment_form-->
@@ -153,7 +163,7 @@
                         @foreach($relatedPosts as $relatedPost)
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="{{url('/')}}/{{$relatedPost->cate_slug}}/{{$relatedPost->post_slug}}.{{$relatedPost->id}}.html"><img class="media-object" src="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$relatedPost->image}} " alt="{{$relatedPost->title}}"></a>
+                                    <a href="{{url('/')}}/{{$relatedPost->cate_slug}}/{{$relatedPost->post_slug}}.{{$relatedPost->id}}.html"><img class="media-object lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-original="{{asset('upload/images/posts/')}}/{{getenvconf('TinyImageWidth').'x'.getenvconf('TinyImageHeight')}}/{{$relatedPost->image}}" alt="{{$relatedPost->title}}"></a>
                                 </div><!--media-left-->
                                 <div class="media-body">
                                     <h4 class="media-heading"><a href="{{url('/')}}/{{$relatedPost->cate_slug}}/{{$relatedPost->post_slug}}.{{$relatedPost->id}}.html">{{str_limit($relatedPost->title, 150)}}
@@ -191,14 +201,34 @@
 
 
 
-
+        <style> .fb_dialog{z-index:999999999} </style>
         
 </section><!--feature_category_section-->
 @endsection
 @section('footer')
-
+<script>
+    $(document).ready(function(){
+        $('.share-btn').click(function(){
+            sharefb();
+        });
+    });
+</script>
 
 <script>
-    
+        function sharefb(){
+            console.log("share");
+            FB.ui({
+            method: 'share',
+            display: 'popup',
+            href: window.location.href,
+            mobile_iframe: true,
+            picture: 'http://znews-photo-fbcrawler.d.za.zdn.vn/w720/Uploaded/aohunkx/2017_07_10/149707153283260buduc.jpg',
+            title: '{{$post->title}}',
+            description: '{!! $post->description !!}',
+            caption: '{{getenvconf('SiteDomain')}}'
+            
+            }, function(response){});
+    }
+
 </script>
 @endsection

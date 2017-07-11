@@ -43,9 +43,9 @@ class HomeController extends Controller
 
        // $posts = $cate->posts()->get();
         //dd($cates);
-        if(is_mobile()){
-           return view('guests.mobile.index',['featurePosts'=>$featurePosts,'newestPosts'=>$newestPosts]); 
-        }
+        // if(is_mobile()){
+        //    return view('guests.mobile.index',['featurePosts'=>$featurePosts,'newestPosts'=>$newestPosts]); 
+        // }
         return view('guests.index',['featurePosts'=>$featurePosts,'newestPosts'=>$newestPosts,'cates'=>$cates]);
     }
     public function getListPosts($cateSlug, $id)
