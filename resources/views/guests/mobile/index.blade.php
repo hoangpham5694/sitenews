@@ -1,4 +1,4 @@
-@extends('guests.master')
+@extends('guests.mobile.master')
 @section('heading')
 <title>Kênh giải trí tuổi teen - {{getenvconf('SiteDomain')}}</title>
 <meta id="metaKeywords" name="keywords" content="Blog, Tin tức, Báo, Việt Nam, Hà Nội, Hồ Chí Minh, Đà Nẵng, Đời sống, Phóng sự, Pháp luật, Thế giới, Khám phá, Thị trường, Chứng khoán, Kinh tế, Bất động sản, Giáo dục, Tuyển sinh, Teen, Thể thao, Ngoại hạng, Champion, La liga, Công nghệ, điện thoại, Oto, Xe Máy, Giải trí, Showbiz, Sao Việt, Âm nhạc, VPOP, KPOP, Phim ảnh, Điện ảnh, Đẹp, Thời trang, Làm đẹp, Người Đẹp, Tình yêu, Du lịch, Ẩm thực, Sách, Cười" />
@@ -138,7 +138,7 @@ var cate_path = 'home';
                         <div class="row">
                         <?php
                         $posts= $cate->posts();
-                        $postFirst = $posts->select('posts.image','posts.title','posts.created_at','posts.description','posts.slug as post_slug', 'posts.id')
+                        $postFirst = $posts->select('posts.image','posts.title','posts.description','posts.slug as post_slug', 'posts.id')
                         ->where('posts.status','=','active')
                         ->orderBy('posts.created_at','DESC')->first();
                        // echo $postFirst->title;

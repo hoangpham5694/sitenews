@@ -42,15 +42,18 @@ class HomeController extends Controller
         */
 
        // $posts = $cate->posts()->get();
-        //dd($cates);
-        // if(is_mobile()){
-        //    return view('guests.mobile.index',['featurePosts'=>$featurePosts,'newestPosts'=>$newestPosts]); 
-        // }
+    //    dd($cates);
+        if(is_mobile()){
+           return view('guests.mobile.index',['featurePosts'=>$featurePosts,'newestPosts'=>$newestPosts,'cates'=>$cates]); 
+        }
         return view('guests.index',['featurePosts'=>$featurePosts,'newestPosts'=>$newestPosts,'cates'=>$cates]);
     }
     public function getListPosts($cateSlug, $id)
     {
        $cate = Category::findOrFail($id);
+        if(is_mobile()){
+           return view('guests.mobile.category',['cate'=>$cate]);
+        }
        return view('guests.category',['cate'=>$cate]);
        
     }
@@ -65,6 +68,9 @@ class HomeController extends Controller
             ->where('posts.created_at','>=',date('Y-m-d',strtotime("-15 days")))
             ->inRandomOrder()
             ->limit(6)->get();
+        if(is_mobile()){
+            return view('guests.mobile.detail',['post'=>$post,'relatedPosts'=>$relatedPosts,'cateSlug'=>$cateSlug]);
+        }
         return view('guests.detail',['post'=>$post,'relatedPosts'=>$relatedPosts,'cateSlug'=>$cateSlug]);
     }
     public function getSearchPost(Request $request)
