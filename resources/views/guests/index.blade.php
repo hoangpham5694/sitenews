@@ -28,7 +28,7 @@
 <meta property="og:image:width" content="800" />
 <meta property="og:image:height" content="354" />
 <meta property="og:url" content="http://{{getenvconf('SiteDomain')}}" />
-<meta property="og:title" content="{{getenvconf('SiteNames')}}" />
+<meta property="og:title" content="{{getenvconf('SiteName')}}" />
 <meta http-equiv="REFRESH" content="1800" />
 <script type="text/javascript">
 zaConfig = {

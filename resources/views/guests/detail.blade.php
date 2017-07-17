@@ -53,7 +53,7 @@
 "@type": "ListItem",
 "position": 1,
 "item": {
-"@id": "http://getenvconf('SiteDomain')",
+"@id": "http://{{getenvconf('SiteDomain')}}",
 "name": "Trang chủ"
 }
 },{
